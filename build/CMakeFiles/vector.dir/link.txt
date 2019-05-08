@@ -1,0 +1,1 @@
+/usr/bin/c++   -Wall    CMakeFiles/vector.dir/src/driver_vector.cpp.o CMakeFiles/vector.dir/src/main.cpp.o  -o vector 

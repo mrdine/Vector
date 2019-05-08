@@ -1,0 +1,22 @@
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/driver_vector.cpp" "/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles/vector.dir/src/driver_vector.cpp.o"
+  "/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/main.cpp" "/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles/vector.dir/src/main.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
+
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../include"
+  )
+
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")
