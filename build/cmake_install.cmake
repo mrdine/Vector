@@ -1,4 +1,4 @@
-# Install script for directory: /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector
+# Install script for directory: /home/mrdaniel/Documentos/Vector
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/mrdaniel/Documentos/Vector/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

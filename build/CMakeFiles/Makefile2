@@ -50,19 +50,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /usr/cmake-3.13.3-Linux-x86_64/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /usr/cmake-3.13.3-Linux-x86_64/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector
+CMAKE_SOURCE_DIR = /home/mrdaniel/Documentos/Vector
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build
+CMAKE_BINARY_DIR = /home/mrdaniel/Documentos/Vector/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/vector.dir
@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build
 CMakeFiles/vector.dir/all:
 	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/depend
 	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles --progress-num=1,2,3 "Built target vector"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/mrdaniel/Documentos/Vector/build/CMakeFiles --progress-num=1,2,3 "Built target vector"
 .PHONY : CMakeFiles/vector.dir/all
 
 # Include target in all.
@@ -81,9 +81,9 @@ all: CMakeFiles/vector.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/vector.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mrdaniel/Documentos/Vector/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/vector.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mrdaniel/Documentos/Vector/build/CMakeFiles 0
 .PHONY : CMakeFiles/vector.dir/rule
 
 # Convenience name for target.

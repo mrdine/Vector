@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /usr/cmake-3.13.3-Linux-x86_64/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /usr/cmake-3.13.3-Linux-x86_64/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector
+CMAKE_SOURCE_DIR = /home/mrdaniel/Documentos/Vector
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build
+CMAKE_BINARY_DIR = /home/mrdaniel/Documentos/Vector/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/vector.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/vector.dir/flags.make
 
 CMakeFiles/vector.dir/src/driver_vector.cpp.o: CMakeFiles/vector.dir/flags.make
 CMakeFiles/vector.dir/src/driver_vector.cpp.o: ../src/driver_vector.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/vector.dir/src/driver_vector.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/vector.dir/src/driver_vector.cpp.o -c /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/driver_vector.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mrdaniel/Documentos/Vector/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/vector.dir/src/driver_vector.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/vector.dir/src/driver_vector.cpp.o -c /home/mrdaniel/Documentos/Vector/src/driver_vector.cpp
 
 CMakeFiles/vector.dir/src/driver_vector.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/vector.dir/src/driver_vector.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/driver_vector.cpp > CMakeFiles/vector.dir/src/driver_vector.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mrdaniel/Documentos/Vector/src/driver_vector.cpp > CMakeFiles/vector.dir/src/driver_vector.cpp.i
 
 CMakeFiles/vector.dir/src/driver_vector.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/vector.dir/src/driver_vector.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/driver_vector.cpp -o CMakeFiles/vector.dir/src/driver_vector.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mrdaniel/Documentos/Vector/src/driver_vector.cpp -o CMakeFiles/vector.dir/src/driver_vector.cpp.s
 
 CMakeFiles/vector.dir/src/main.cpp.o: CMakeFiles/vector.dir/flags.make
 CMakeFiles/vector.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/vector.dir/src/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/vector.dir/src/main.cpp.o -c /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mrdaniel/Documentos/Vector/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/vector.dir/src/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/vector.dir/src/main.cpp.o -c /home/mrdaniel/Documentos/Vector/src/main.cpp
 
 CMakeFiles/vector.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/vector.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/main.cpp > CMakeFiles/vector.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mrdaniel/Documentos/Vector/src/main.cpp > CMakeFiles/vector.dir/src/main.cpp.i
 
 CMakeFiles/vector.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/vector.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/src/main.cpp -o CMakeFiles/vector.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mrdaniel/Documentos/Vector/src/main.cpp -o CMakeFiles/vector.dir/src/main.cpp.s
 
 # Object files for target vector
 vector_OBJECTS = \
@@ -95,7 +95,7 @@ vector: CMakeFiles/vector.dir/src/driver_vector.cpp.o
 vector: CMakeFiles/vector.dir/src/main.cpp.o
 vector: CMakeFiles/vector.dir/build.make
 vector: CMakeFiles/vector.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable vector"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mrdaniel/Documentos/Vector/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable vector"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/vector.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -108,6 +108,6 @@ CMakeFiles/vector.dir/clean:
 .PHONY : CMakeFiles/vector.dir/clean
 
 CMakeFiles/vector.dir/depend:
-	cd /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build /home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/build/CMakeFiles/vector.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/mrdaniel/Documentos/Vector/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mrdaniel/Documentos/Vector /home/mrdaniel/Documentos/Vector /home/mrdaniel/Documentos/Vector/build /home/mrdaniel/Documentos/Vector/build /home/mrdaniel/Documentos/Vector/build/CMakeFiles/vector.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/vector.dir/depend
 

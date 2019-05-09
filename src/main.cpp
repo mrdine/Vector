@@ -48,8 +48,7 @@ int main()
     //vector<int> x(d, std::end(d));
 
     //Testa o iterator
-    MyIterator<int> it;
+    vector<int>::iterator it;
     it = d.begin();
-
     std::cout << *it << std::endl;
 }

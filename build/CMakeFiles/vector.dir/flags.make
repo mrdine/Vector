@@ -6,5 +6,5 @@ CXX_FLAGS =  -Wall    -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/daniel/Documentos/Daniel/Trabalhos/EDB1/vector/include 
+CXX_INCLUDES = -I/home/mrdaniel/Documentos/Vector/include 
 
