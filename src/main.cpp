@@ -22,6 +22,9 @@ int main()
     v.push_back( 200 );
     std::cout << "\n\n>>> Array v1: " << v << std::endl;
     */
+
+    /*
+    //Testa a atribuição
     vector<int> c(10);
     for(int i=0; i<10; i++)
     {
@@ -33,4 +36,20 @@ int main()
     v = c;
 
     std::cout << v[7] << std::endl;
+    */
+
+    //Testa o constructor de range
+    vector<int> d(10);
+    for(int i=0; i<10; i++)
+    {
+      d[i] = i;
+    }
+
+    //vector<int> x(d, std::end(d));
+
+    //Testa o iterator
+    MyIterator<int> it;
+    it = d.begin();
+
+    std::cout << *it << std::endl;
 }

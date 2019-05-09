@@ -3,11 +3,79 @@
 #include <iterator>
 #include <initializer_list> // std::initializer_list
 
+/// === ITERATOR
+template <typename T>
+class MyIterator {
+  public:
+    //Below we have the iterator_traits common interface
+    /// Difference type used to calculated distance between ITERATORS
+    typedef std::ptrdiff_t difference_type;
+    typedef T value_type;
+    typedef T* pointer;
+    typedef T& reference;
+    typedef std::bidirectional_iterator_tag iterator_category; //!< Iterator category.
+
+    using iterator = MyIterator< T >;
+    using const_iterator = MyIterator< const T >;
+    //deve ter begin(), end(), cbegin(), cend()
+
+    //Construtor padrão
+    MyIterator():
+      current{nullptr}
+      { /* empty */}
+
+    //Construtor recebendo ponteiro
+    MyIterator(pointer p):
+      current{p}
+      { /* empty */}
+
+      /*
+    //Construtor recebendo iterator
+    MyIterator(iterator& it):
+      {
+        this->current = it.current;
+      }
+      */
+    reference operator* ()
+    {
+      return *current;
+    }
+
+    reference operator= (iterator other)
+    {
+      this->current = other.current;
+    }
+
+
+    MyIterator operator++ ();
+    MyIterator operator++ ( int );
+    MyIterator operator-- ();
+    MyIterator operator -- ( int );
+
+    template<class V>
+    friend MyIterator operator+(difference_type, MyIterator);
+    template<class V>
+    friend MyIterator operator+(MyIterator, difference_type);
+
+    template<class V>
+    friend MyIterator operator-(difference_type, MyIterator);
+    template<class V>
+    friend MyIterator operator-(MyIterator, difference_type);
+
+  private:
+    T *current;
+  };
+
+
 template < typename T >
 class vector {
 
     public:
 
+      using iterator = MyIterator< T >;
+      using const_iterator = MyIterator< const T >;
+
+      typedef T* pointer;
 
         //Construtor que serve como padrão e por tamanho
         vector( size_t count=0 ) :
@@ -57,7 +125,13 @@ class vector {
             delete [] data;
         }
 
+        //=== ITERATORS
+        iterator begin();
+        iterator end();
+        const_iterator cbegin() const;
+        const_iterator cend() const;
 
+        //=== OPERATORS ////
         //Operador =, esse vector recebe rhs
         vector& operator=( const vector& rhs )
         {
