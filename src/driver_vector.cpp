@@ -44,7 +44,7 @@ class vector {
 
             // Inserir normalmente.
             data[size++] = value;
-            //*begin() = value;
+            //begin() = value;
         }
 
         /// Aumenta a capacidade de armazenamento do vector para o valor `new_cap` fornecido.
