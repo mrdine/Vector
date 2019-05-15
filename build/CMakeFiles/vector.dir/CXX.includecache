@@ -18,13 +18,19 @@ initializer_list
 stdexcept
 -
 
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/driver_vector.cpp
-iostream
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/main.cpp
+iterator
+-
+functional
 -
 algorithm
 -
+gtest/gtest.h
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/gtest/gtest.h
+../include/vector.h
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/include/vector.h
 
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/main.cpp
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/mydriver.cpp
 iostream
 -
 ../include/vector.h

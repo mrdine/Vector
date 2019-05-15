@@ -123,33 +123,6 @@ vector/fast:
 	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/build
 .PHONY : vector/fast
 
-src/driver_vector.o: src/driver_vector.cpp.o
-
-.PHONY : src/driver_vector.o
-
-# target to build an object file
-src/driver_vector.cpp.o:
-	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/src/driver_vector.cpp.o
-.PHONY : src/driver_vector.cpp.o
-
-src/driver_vector.i: src/driver_vector.cpp.i
-
-.PHONY : src/driver_vector.i
-
-# target to preprocess a source file
-src/driver_vector.cpp.i:
-	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/src/driver_vector.cpp.i
-.PHONY : src/driver_vector.cpp.i
-
-src/driver_vector.s: src/driver_vector.cpp.s
-
-.PHONY : src/driver_vector.s
-
-# target to generate assembly for a file
-src/driver_vector.cpp.s:
-	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/src/driver_vector.cpp.s
-.PHONY : src/driver_vector.cpp.s
-
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -177,6 +150,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/mydriver.o: src/mydriver.cpp.o
+
+.PHONY : src/mydriver.o
+
+# target to build an object file
+src/mydriver.cpp.o:
+	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/src/mydriver.cpp.o
+.PHONY : src/mydriver.cpp.o
+
+src/mydriver.i: src/mydriver.cpp.i
+
+.PHONY : src/mydriver.i
+
+# target to preprocess a source file
+src/mydriver.cpp.i:
+	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/src/mydriver.cpp.i
+.PHONY : src/mydriver.cpp.i
+
+src/mydriver.s: src/mydriver.cpp.s
+
+.PHONY : src/mydriver.s
+
+# target to generate assembly for a file
+src/mydriver.cpp.s:
+	$(MAKE) -f CMakeFiles/vector.dir/build.make CMakeFiles/vector.dir/src/mydriver.cpp.s
+.PHONY : src/mydriver.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +186,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... vector"
 	@echo "... edit_cache"
-	@echo "... src/driver_vector.o"
-	@echo "... src/driver_vector.i"
-	@echo "... src/driver_vector.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/mydriver.o"
+	@echo "... src/mydriver.i"
+	@echo "... src/mydriver.s"
 .PHONY : help
 
 

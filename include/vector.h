@@ -4,6 +4,9 @@
 #include <initializer_list> // std::initializer_list
 #include <stdexcept>
 
+namespace sc {
+
+
 /// === ITERATOR
 template <typename T>
 class MyIterator {
@@ -29,6 +32,7 @@ class MyIterator {
       current{p}
       { /* empty */}
 
+    
       /*
     //Construtor recebendo iterator
     MyIterator(iterator& it):
@@ -47,12 +51,22 @@ class MyIterator {
       return *this;
     }
 
-    bool operator== (const MyIterator& other)
+
+    bool operator== (const MyIterator& other) const
     {
       return this->current == other.current;
     }
 
-    bool operator!= (const MyIterator& other)
+    bool operator!= (const MyIterator& other) const
+    {
+      if(this->current == other.current)
+      {
+        return false;
+      } else {return true;}
+
+    }
+
+    bool operator!= (MyIterator& other) const
     {
       if(this->current == other.current)
       {
@@ -201,12 +215,12 @@ class vector {
 
       //=== ITERATORS
 
-      iterator begin()
+      iterator begin() const
       {
         return iterator(data);
       }
 
-      iterator end()
+      iterator end() const
       {
         iterator endV(&data[m_size]);
         return endV;
@@ -358,12 +372,12 @@ class vector {
         return *it;
       }
 
-      T& front()
+      T& front() const
       {
         return data[0];
       }
 
-      T& back()
+      T& back() const
       {
         return data[m_size-1];
       }
@@ -466,7 +480,7 @@ class vector {
         if(m_size > 0)
         {
         //Destroi (atribuindo 0?) o ultimo elemento
-        *data[m_size-1] = 0;
+        data[m_size-1] = 0;
 
         //Reduz o tamanho
         m_size--;
@@ -690,3 +704,4 @@ class vector {
       }
 
 };
+}
