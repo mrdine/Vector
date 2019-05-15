@@ -84,7 +84,7 @@ int main()
     */
 
     //Testa o push_front()
-
+    /*
     vector<int> h(5);
     for(int i=0; i<5; i++)
     {
@@ -156,5 +156,81 @@ int main()
     ue = ble == bla;
     std::cout << ue << std::endl;
     std::cout << eq.size() << ", " << differ.size() << std::endl;
+    */
+
+    // testa o insert()
+    /*
+    vector<int>ins;
+    for(auto i{0}; i<10; i++)
+    {
+      ins.push_back(i+1);
+    }
+
+    vector<int>::iterator itsert = ins.end();
+
+    for(auto i{0}; i<10; i++)
+    {
+      std::cout << ins[i] << std::endl;
+    }
+
+    ins.insert(itsert, 11);
+
+    for(auto i{0}; i<11; i++)
+    {
+      std::cout << ins[i] << std::endl;
+    }
+    */
+
+    // Testa o assign()
+    /*
+    ins.assign(7,7);
+
+    for(auto i{0}; i<7; i++)
+    {
+      std::cout << ins[i] << std::endl;
+    }
+    std::cout << ins.size() << std::endl;
+
+
+    vector<int>noovo(10);
+    for(auto i{0}; i<10; i++)
+    {
+      noovo.push_back(i+1);
+    }
+    //vector<int>::iterator be = noovo.begin();
+    //vector<int>::iterator en = noovo.end();
+
+    vector<int>ola(10);
+    //ola.insert(be, en);
+    for(auto i{0}; i<10; i++)
+    {
+      std::cout << ola[i] << std::endl;
+    }
+
+    ola.assign({1,2,3,4,5,6,7});
+    for(auto i{0}; i<10; i++)
+    {
+      std::cout << ola[i] << std::endl;
+    }
+    */
+
+    //Testa o shrink_to_fit()
+
+    vector<int> shrink(10);
+    std::cout << shrink.capacity() << std::endl;
+    for(auto i{0}; i<10; i++)
+    {
+      shrink[i] = i+1;
+    }
+
+    std::cout << shrink.capacity() << std::endl;
+    std::cout << shrink.size() << std::endl;
+    shrink.shrink_to_fit();
+    std::cout << shrink.capacity() << std::endl;
+
+    
+
+    shrink.erase(shrink.begin(), shrink.end());
+    std::cout << shrink.size() << std::endl;
 
 }

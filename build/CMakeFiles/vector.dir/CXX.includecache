@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../include/vector.h
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/include/vector.h
 iostream
 -
 algorithm
@@ -15,10 +15,18 @@ iterator
 -
 initializer_list
 -
+stdexcept
+-
 
-/home/mrdaniel/Documentos/Vector/src/main.cpp
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/driver_vector.cpp
 iostream
 -
-vector.h
-/home/mrdaniel/Documentos/Vector/src/vector.h
+algorithm
+-
+
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/main.cpp
+iostream
+-
+../include/vector.h
+/home/daniel/Documentos/Daniel/Trabalhos/Vector/include/vector.h
 

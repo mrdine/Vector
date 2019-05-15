@@ -2,6 +2,7 @@
 #include <algorithm> // std::copy
 #include <iterator>
 #include <initializer_list> // std::initializer_list
+#include <stdexcept>
 
 /// === ITERATOR
 template <typename T>
@@ -61,7 +62,15 @@ class MyIterator {
     }
 
 
-
+    MyIterator operator+(int s)
+    {
+      for(int i=0; i < s; i++)
+      {
+        pointer c = this->current;
+        this->current = c++;
+      }
+      return *this;
+    }
 
     MyIterator operator++ ()
     {
@@ -199,8 +208,8 @@ class vector {
 
       iterator end()
       {
-        iterator endV(&data[m_capacity-1]);
-        return endV++;
+        iterator endV(&data[m_size]);
+        return endV;
       }
 
       const_iterator cbegin() const
@@ -210,8 +219,8 @@ class vector {
 
       const_iterator cend() const
       {
-        iterator endV(&data[m_capacity-1]);
-        const_iterator cendV = endV++;
+        iterator endV(&data[m_size]);
+        const_iterator cendV = endV;
         return cendV;
       }
 
@@ -229,16 +238,6 @@ class vector {
         std::copy(&rhs.data[0], &rhs.data[m_size], data);
       }
 
-      //Operador []
-      T& operator[](size_t pos)
-      {
-        return data[pos];
-      }
-
-      T& operator[](iterator it)
-      {
-        return *it;
-      }
 
       //Operador ==
       bool operator==(const vector& other) const
@@ -315,6 +314,60 @@ class vector {
         return m_capacity;
       }
 
+      /// ELEMENT ACCESS METHOS
+
+      //Operador[], se o pos for menor que 0 ou maior que o tamanho do vector, é lançada uma exceção "out_of_range"
+      T& operator[](size_t pos)
+      {
+          return data[pos];
+      }
+
+      const T& operator[](size_t pos) const
+      {
+          const T& result = data[pos];
+          return result;
+      }
+
+      T& at(size_t pos)
+      {
+        if(pos >= 0 && pos < m_size)
+        {
+          return data[pos];
+        }
+        else
+        {
+          throw std::out_of_range("out of range");
+        }
+      }
+
+      const T& at(size_t pos) const
+      {
+        if(pos >= 0 && pos < m_size)
+        {
+          const T result = data[pos];
+          return result;
+        }
+        else
+        {
+          throw std::out_of_range("out of range");
+        }
+      }
+
+      T& operator[](iterator it)
+      {
+        return *it;
+      }
+
+      T& front()
+      {
+        return data[0];
+      }
+
+      T& back()
+      {
+        return data[m_size-1];
+      }
+
       /// MODIFIERS METHODS
       //Retorna o numero de saltos do first até o last, se first > last, retorna negativamente o numero de saltos de last até first
       size_t distance(iterator first, iterator last)
@@ -359,7 +412,7 @@ class vector {
 
         T* it = &data[m_size];
 
-        for(auto i = 0; i < m_size; i++)
+        for(size_t i = 0; i < m_size; i++)
         {
           *it = *(it-1);
           it--;
@@ -419,7 +472,109 @@ class vector {
         m_size--;
         }
       }
-      void insert();
+
+      /// Inserir elemento numa posição especifica
+      iterator insert (iterator position, const T& val)
+      {
+        //reservar espaço para inserçao
+        if ( m_size == m_capacity )
+        {
+            std::cout << "[push_back] : capacity = " << m_capacity << ", estou dobrando...\n";
+            reserve( ( m_capacity == 0 ) ? 1 : (2 * m_capacity) );
+        }
+
+        if(position == this->begin())
+        {
+          //Realocar os elementos
+          T* count =  data+(m_size-1);
+          while(count >= data)
+          {
+            *(count+1) = *count;
+            count--;
+          }
+          data[0] = val;
+          m_size++;
+
+          return position;
+        }
+        else
+        {
+          size_t d = 0;
+          //Saber a posição para inserir o lemento no data
+          for(iterator it = this->begin();it != position; it++)
+          {
+            d++;
+          }
+
+          T* count = data+(m_size-1);
+          while(count >= data + (d-1))
+          {
+            *(count+1) = *count;
+            count--;
+          }
+
+          data[d-1] = val;
+          m_size++;
+
+          iterator inserted(data+(d-1));
+          return inserted;
+        }
+      }
+
+      template < typename InItr>
+      iterator insert( iterator pos, InItr first, InItr last )
+      {
+
+      }
+
+      /// Repreenche o vector com count vezes o valor value;
+      void assign( size_t count, const T & value )
+      {
+        m_size = count;
+        for(size_t i = 0; i < count; i++)
+        {
+          data[i] = value;
+        }
+      }
+
+      /// Repreenche o vector com copia dos elementos do range [first, last) (Não entendi)
+      template < typename InItr>
+      void assign( InItr first, InItr last )
+      {
+        //Contar distancia entre first e last
+        int siz = 0;
+        InItr count = first;
+        while (count != last)
+        {
+          siz++;
+          count++;
+        }
+
+        //Atribuir novo tamanho do vector
+        m_size = siz;
+
+        //Repreencher o vector
+        for(size_t i = 0; i < m_size; i++)
+        {
+          data[i] = *first;
+          first++;
+        }
+
+      }
+
+      /// Repreenche o vetor com copia dos elementos na lista ilist
+      void assign( std::initializer_list<T> ilist )
+      {
+        //Reservar espaço, se não houver
+        reserve(ilist.size() * 2);
+        //Atribui novo tamanho do vector
+        m_size = ilist.size();
+
+        std::copy ( ilist.begin(), ilist.end(), data );
+
+
+      }
+
 
       /// Aumenta a capacidade de armazenamento do vector para o valor `new_cap` fornecido.
       void reserve( size_t new_cap )
@@ -444,11 +599,24 @@ class vector {
           m_capacity = new_cap;
       }
 
-      void shrink_to_fit();
-      void assign();
+      // Remove a capacidade não usada de memória, transforma a capacidade em size()
+      void shrink_to_fit()
+      {
+        //Alocar nova memória com capacidade de size()
+        T * temp = new T[m_size];
+        //Copiar dados para nova memória
+        std::copy(&data[0], &data[m_size], temp);
+        //Deletar antiga memória
+        delete[] data;
+        //Atribuir nova memória e nova capacidade
+        data = temp;
+        m_capacity = m_size;
+      }
+
+
 
       //Apaga um elemento do vector na posição dada pelo iterator it, se it < last_element, após a remoção os elementos a partir do sucessor do it serão deslocados, caso contrário (it == last_element), o valor será dito como NULL ou 0?
-      void erase(iterator it)
+      iterator erase(iterator it)
       {
         //Iterador para a posição do ultimo elemento
         iterator last_element = data+(m_size-1);
@@ -463,13 +631,50 @@ class vector {
             }
 
           m_size--;
+          return it;
         }
         //Se it == last_element, apenas deletar o valor (atribuindo 0?) e reduzindo o tamanho do vector
         else if(it == last_element)
         {
-          *(data + m_size-1) = 0;
+
+          *(data + m_size-1) = T();
 
           m_size--;
+          return this->end();
+        }
+        else
+        {
+          throw std::out_of_range("out of range");
+        }
+      }
+
+
+      iterator erase(iterator first, iterator last)
+      {
+        size_t apagados = 0;
+        if(first < last)
+        {
+          //conta quantos serão apagados
+          iterator it = first;
+          while(it != last)
+          {
+            apagados++;
+            it++;
+          }
+          it = first;
+          //Realoca os elementos
+          while(last != this->end())
+          {
+            *it = *last;
+            last++;
+            it++;
+          }
+          m_size = m_size - apagados;
+          return first;
+        }
+        else
+        {
+          throw std::range_error("last < first");
         }
       }
 
