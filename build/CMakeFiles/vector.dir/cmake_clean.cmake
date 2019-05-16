@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/vector.dir/src/main.cpp.o"
-  "CMakeFiles/vector.dir/src/mydriver.cpp.o"
   "vector.pdb"
   "vector"
 )

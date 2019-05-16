@@ -4,10 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/main.cpp" "/home/daniel/Documentos/Daniel/Trabalhos/Vector/build/CMakeFiles/vector.dir/src/main.cpp.o"
-  "/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/mydriver.cpp" "/home/daniel/Documentos/Daniel/Trabalhos/Vector/build/CMakeFiles/vector.dir/src/mydriver.cpp.o"
+  "/Users/karine/prog/cpp/EDB1/Vector/src/main.cpp" "/Users/karine/prog/cpp/EDB1/Vector/build/CMakeFiles/vector.dir/src/main.cpp.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH

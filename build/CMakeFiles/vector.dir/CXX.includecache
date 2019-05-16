@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/include/vector.h
+/Users/karine/prog/cpp/EDB1/Vector/include/vector.h
 iostream
 -
 algorithm
@@ -18,7 +18,7 @@ initializer_list
 stdexcept
 -
 
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/main.cpp
+/Users/karine/prog/cpp/EDB1/Vector/src/main.cpp
 iterator
 -
 functional
@@ -26,13 +26,7 @@ functional
 algorithm
 -
 gtest/gtest.h
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/gtest/gtest.h
+/Users/karine/prog/cpp/EDB1/Vector/src/gtest/gtest.h
 ../include/vector.h
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/include/vector.h
-
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/src/mydriver.cpp
-iostream
--
-../include/vector.h
-/home/daniel/Documentos/Daniel/Trabalhos/Vector/include/vector.h
+/Users/karine/prog/cpp/EDB1/Vector/include/vector.h
 
