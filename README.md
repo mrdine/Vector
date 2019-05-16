@@ -13,3 +13,6 @@ To compile, follow these steps:
     ./vector: run all tests
 
 
+to compile with local gtest manually, follow these steps:
+
+	g++ -Wall -std=c++11 src/main.cpp -L lib -I include -l gtest -l gtest_main -l pthread -o exe
