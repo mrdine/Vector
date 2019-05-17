@@ -42,4 +42,4 @@ file(GLOB SOURCES "src/main.cpp")
 add_executable(vector ${SOURCES} )
 
 # Link with the google test libraries.
-target_link_libraries(vector PRIVATE ${GTEST_LIBRARIES} PRIVATE pthread PRIVATE IntRange )
+target_link_libraries(vector PRIVATE ${GTEST_LIBRARIES} PRIVATE pthread PRIVATE IntRange)

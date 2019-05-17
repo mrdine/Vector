@@ -21,7 +21,7 @@ namespace sc {
 
 
 	//deve ter begin(), end(), cbegin(), cend() ?????????????????????????
-    
+
 	/// Construtor padrão
 	MyIterator( ):
 	    current{nullptr}
@@ -32,7 +32,7 @@ namespace sc {
 	    current{p}
 	{ /* empty */}
 
-    
+
 	/*
        /// Construtor recebendo iterator
        MyIterator(iterator& it):
@@ -59,7 +59,7 @@ namespace sc {
 	    // return m_ptr;
 	//}
 
-    
+
 	MyIterator operator++( ) // ++it;
 	{
 	    pointer c = this->current;
@@ -203,7 +203,7 @@ namespace sc {
 	    m_size = ilist.size();
 	    m_capacity = 2*ilist.size();
 
-	    std::copy ( ilist.begin(), ilist.begin()+limit, data );
+	    std::copy ( ilist.begin(), ilist.end(), data );
 	}
 
 	//?????????????????????????? faltando...
@@ -213,9 +213,12 @@ namespace sc {
 	// Construtor que cria copiando os dados de um range
 	vector( iterator first, iterator last )
 	{
-	    size_type dis = distance(first, last);
+
+      size_type dis = distance(first, last);
+
 	    data = new T[2*dis];
 	    m_capacity = 2*dis;
+      m_size = dis;
 
 	    for(size_type i = 0; i < dis; i++)
 		{
@@ -263,7 +266,7 @@ namespace sc {
 
 	    std::copy(&rhs.data[0], &rhs.data[m_size], data);
 	    //????????????????// cadê o return?
-	    return *this; /// coloquei esse checar 
+	    return *this; /// coloquei esse checar
 	}
 
 
@@ -348,21 +351,31 @@ namespace sc {
 	//Retorna o numero de saltos do first até o last, se first > last, retorna negativamente o numero de saltos de last até first
 	size_type distance(iterator first, iterator last)
 	{
-	    size_type dis = 0;
-	    iterator it = first;
-	    if(last < first)
-		{
-		    return dis;
-		}
-	    else
-		{
-		    while(it != last)
-			{
-			    dis += 1;
-			    it++;
-			}
-		    return dis/2 + 1 ;
-		}
+    /*
+     * Lançando exceção quando não deveria
+      if(first < last)
+      {
+        size_type dis = 0;
+        iterator it;
+        for(it = first; it != last; it++)
+        {
+          dis++;
+        }
+        return dis;
+    }
+    else
+    {
+      throw std::invalid_argument("foi passado o first > last");
+    }
+  */
+    size_type dis = 0;
+    iterator it;
+    for(it = first; it != last; it++)
+    {
+      dis++;
+    }
+    return dis;
+
 	}
 
 	// Limpa todo o vetor (deve ser NULL?) e redefinindo m_size = 0
@@ -668,7 +681,7 @@ namespace sc {
 
 	//?????????????????? falta o outro front
 	const T& front( void ) const;
- 
+
 	T& front( void ) //const // ?????????????? não tem const no pdf
 	{
 	    return data[0];
@@ -717,7 +730,7 @@ namespace sc {
 		}
 	}
 
-	//???????????????????????? tem dois data faltando pg 13 l63 e 64 
+	//???????????????????????? tem dois data faltando pg 13 l63 e 64
 
 
 	// Friend functions
@@ -742,7 +755,7 @@ namespace sc {
 	//???????????????????????? tem outro private la pg 13 l 74
 
 
-	
+
     }; // end class vector
 
 } // end namespace sc

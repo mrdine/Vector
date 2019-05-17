@@ -39,9 +39,11 @@ TEST(IntVector, ListConstructor)
 
     for( auto i{0u} ; i < vec.size() ; ++i )
       ASSERT_EQ( i+1, (unsigned long) vec[i] );
+
 }
 
-/*
+
+
 TEST(IntVector, RangeConstructor)
 {
     // Range = the entire vector.
@@ -56,12 +58,13 @@ TEST(IntVector, RangeConstructor)
     // Range is part of the vector.
     sc::vector<int> vec3( std::next( vec.begin(), 1 ), std::next( vec.begin(), 3 ) );
     ASSERT_EQ( vec3.size(), 2 );
+
     EXPECT_FALSE( vec3.empty() );
 
     for( auto i{0u} ; i < vec3.size() ; ++i )
         ASSERT_EQ( vec[i+1], vec3[i] );
 }
-
+/*
 TEST(IntVector, CopyConstructor)
 {
     // Range = the entire vector.
@@ -609,4 +612,3 @@ int main(int argc, char** argv)
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
-
