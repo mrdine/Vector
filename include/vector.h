@@ -19,15 +19,12 @@ namespace sc {
 	typedef T& reference; //!< Reference to the value type
 	typedef std::bidirectional_iterator_tag iterator_category; //!< Iterator category.
 
-
-	//deve ter begin(), end(), cbegin(), cend() ?????????????????????????
-
-	/// Construtor padrão
+	/// Default constructor
 	MyIterator( ):
 	    current{nullptr}
 	{ /* empty */}
 
-	/// Construtor recebendo ponteiro
+	/// Constructor with a pointer parameter
 	MyIterator( pointer p ):
 	    current{p}
 	{ /* empty */}
@@ -214,11 +211,11 @@ namespace sc {
 	vector( iterator first, iterator last )
 	{
 
-      size_type dis = distance(first, last);
+	  size_type dis = distance(first, last);
 
 	    data = new T[2*dis];
 	    m_capacity = 2*dis;
-      m_size = dis;
+	    m_size = dis;
 
 	    for(size_type i = 0; i < dis; i++)
 		{

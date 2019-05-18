@@ -1,6 +1,7 @@
 #include <iterator>             // std::begin(), std::end()
 #include <functional>           // std::function
 #include <algorithm>            // std::min_element
+#include <iostream>
 
 #include "gtest/gtest.h"        // gtest lib
 #include "../include/vector.h"   // header file for tested functions
@@ -13,11 +14,13 @@
 
 TEST(IntVector, DefaultConstructor)
 {
+    
     sc::vector<int> vec;
-
+  
     EXPECT_EQ( vec.size(), 0u );
     EXPECT_EQ( vec.capacity(), 0u );
     EXPECT_TRUE( vec.empty() );
+    
 }
 
 
@@ -28,9 +31,12 @@ TEST(IntVector, ConstructorSize)
     EXPECT_EQ( vec.size(), 0u );
     EXPECT_EQ( vec.capacity(), 10u );
     EXPECT_TRUE( vec.empty() );
+
 }
 
 
+
+/*
 TEST(IntVector, ListConstructor)
 {
     sc::vector<int> vec{ 1, 2, 3, 4, 5 };
@@ -64,7 +70,7 @@ TEST(IntVector, RangeConstructor)
     for( auto i{0u} ; i < vec3.size() ; ++i )
         ASSERT_EQ( vec[i+1], vec3[i] );
 }
-/*
+
 TEST(IntVector, CopyConstructor)
 {
     // Range = the entire vector.
@@ -609,6 +615,7 @@ TEST(IntVector, ErasePos)
 
 int main(int argc, char** argv)
 {
+
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
