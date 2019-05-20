@@ -156,27 +156,26 @@ namespace sc {
     class vector {
 
     public:
-
-	using size_type = unsigned long; //!< The size type.
-	typedef T* pointer; //!< Pointer to a value stored in the container.
+        
+	using size_type = unsigned long; //!< The size type. 
+	using pointer = T*;   //!< Pointer to a value stored in the container.
+	using reference = T&; //!< Reference to a value stored in the container.
+	using const_reference = const T&; //!< Const reference to a value stored in the container.
 	using iterator = MyIterator< T >;
 	using const_iterator = MyIterator< const T >;
-	// ????????????????????????// tem muitos outros using não sendo usados pq? pg 12
+	
 
 	//=== SPECIAL MEMBERS
 
-	/// Construtor que serve como padrão e por tamanho
-	vector( size_type count = 0 ) :
+
+	/// Default constructor: construct a empty vector with capacity count
+	explicit vector( size_type count = 0 ) :
 	    data{ new T[ count ] },
 	    m_size{ 0 },
 	    m_capacity{ count }
 	{ /* empty */ }
 
-	/// Destructor
-	~vector( void )
-	{
-	    delete [] data;
-	}
+
 
 	//Construtor que copia do vector source para esse vector
 	vector( const vector& source )
@@ -201,6 +200,13 @@ namespace sc {
 	    m_capacity = 2*ilist.size();
 
 	    std::copy ( ilist.begin(), ilist.end(), data );
+	}
+
+
+	/// Destructor
+	~vector( void )
+	{
+	    delete [] data;
 	}
 
 	//?????????????????????????? faltando...

@@ -35,7 +35,6 @@ TEST(IntVector, ConstructorSize)
 }
 
 
-
 /*
 TEST(IntVector, ListConstructor)
 {
