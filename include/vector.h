@@ -169,6 +169,9 @@ namespace sc {
 
 
 	/// Default constructor: construct a empty vector with capacity count
+	/***
+	 * \param count size of vector to be initialize
+	 */
 	explicit vector( size_type count = 0 ) :
 	    data{ new T[ count ] },
 	    m_size{ 0 },
@@ -177,6 +180,9 @@ namespace sc {
 
 
 	/// Copy constructor: copy vector source to this vector
+	/***
+	 * \param source vector to be used as source to initialize the elements of the vector with.
+	 */
 	vector( const vector& source )
 	    : m_size { source.m_size },
 	    m_capacity { source.m_capacity }
@@ -187,18 +193,19 @@ namespace sc {
 	    std::copy( &source.data[0], &source.data[m_size], data );
 	}
 
-	// Construtor a partir de lista inicializadora
+	/// List constructor: Constructor from a initializer list
+	/***
+	 * \param ilist initializer list to initialize the elements of the vector with
+	 */
 	vector( std::initializer_list<T> ilist )
 	{
-	    // determinar o menor tamanho para garantir que
-	    // não vamos gerar segfault.
-	    auto limit = std::min( ilist.size(), m_size); // ????????? unused?
-	    // Copiar os elementos do clone.
+	    // copy atributes from list
 	    data = new T[2*ilist.size()];
 	    m_size = ilist.size();
-	    m_capacity = 2*ilist.size();
+	    m_capacity = 2*ilist.size(); // capacidade dobrada 1????????????
 
-	    std::copy ( ilist.begin(), ilist.end(), data );
+	    // Copy elements from list 
+	    std::copy ( ilist.begin(), ilist.end(), data ); // Pode 4???????????
 	}
 
 
@@ -208,15 +215,20 @@ namespace sc {
 	    delete [] data;
 	}
 
-	//?????????????????????????? faltando...
+	// 3?????????????????????????? faltando...
 	// vector( vector && );
 
-	/// ?????????????????? na pg 12 tem um template lá... pq????
-	// Construtor que cria copiando os dados de um range
+	
+	/// Range constructor: Constructs the vector with the contents of the range [first, last) .
+	/***
+	 * \param first iterator pointing to the beginning of the range to copy the elements from.
+	 * \param last iterator pointing to the end of the range to copy the elements from.
+	 */
+	//template< typename InputIt > /// 5?????????????? na pg 12 tem um template lá... pq????
 	vector( iterator first, iterator last )
 	{
 
-	  size_type dis = distance(first, last);
+	    size_type dis = distance(first, last);
 
 	    data = new T[2*dis];
 	    m_capacity = 2*dis;
@@ -351,32 +363,32 @@ namespace sc {
 
 	///=== MODIFIERS METHODS
 	//Retorna o numero de saltos do first até o last, se first > last, retorna negativamente o numero de saltos de last até first
-	size_type distance(iterator first, iterator last)
+	size_type distance( iterator first, iterator last ) // pq isso? 7???????????
 	{
-    /*
-     * Lançando exceção quando não deveria
-      if(first < last)
-      {
-        size_type dis = 0;
-        iterator it;
-        for(it = first; it != last; it++)
-        {
-          dis++;
-        }
-        return dis;
-    }
-    else
-    {
-      throw std::invalid_argument("foi passado o first > last");
-    }
-  */
-    size_type dis = 0;
-    iterator it;
-    for(it = first; it != last; it++)
-    {
-      dis++;
-    }
-    return dis;
+	    /*
+	     * Lançando exceção quando não deveria
+	     if(first < last)
+	     {
+	     size_type dis = 0;
+	     iterator it;
+	     for(it = first; it != last; it++)
+	     {
+	     dis++;
+	     }
+	     return dis;
+	     }
+	     else
+	     {
+	     throw std::invalid_argument("foi passado o first > last");
+	     }
+	    */
+	    size_type dis = 0;
+	    iterator it;
+	    for(it = first; it != last; it++)
+		{
+		    dis++;
+		}
+	    return dis;
 
 	}
 
@@ -751,13 +763,10 @@ namespace sc {
 
 
     private:
-	pointer data; //!< Area de armazenamento.
+	pointer data; //!< Area de armazenamento. // usar unique_ptr 2???????????????????????? 
 	size_type m_size; //!< Número de elementos atualmente no vector.
 	size_type m_capacity; //!< Capacidade máxima (atual) do vector.
-	//???????????????????????? tem outro private la pg 13 l 74
-
-
-
+	
     }; // end class vector
 
 } // end namespace sc

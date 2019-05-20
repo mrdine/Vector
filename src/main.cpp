@@ -35,7 +35,7 @@ TEST(IntVector, ConstructorSize)
 }
 
 
-/*
+
 TEST(IntVector, ListConstructor)
 {
     sc::vector<int> vec{ 1, 2, 3, 4, 5 };
@@ -47,30 +47,26 @@ TEST(IntVector, ListConstructor)
 
 }
 
-
-
 TEST(IntVector, RangeConstructor)
 {
     // Range = the entire vector.
     sc::vector<int> vec{ 1, 2, 3, 4, 5 };
     sc::vector<int> vec2( vec.begin(), vec.end() );
-    ASSERT_EQ( vec2.size(), 5 );
+    ASSERT_EQ( vec2.size(), 5u );
     EXPECT_FALSE( vec.empty() );
 
     for( auto i{0u} ; i < vec.size() ; ++i )
-        ASSERT_EQ( i+1, vec[i] );
+        ASSERT_EQ( i+1, (unsigned long) vec[i] );
 
     // Range is part of the vector.
     sc::vector<int> vec3( std::next( vec.begin(), 1 ), std::next( vec.begin(), 3 ) );
-    ASSERT_EQ( vec3.size(), 2 );
+    ASSERT_EQ( vec3.size(), 2u );
 
     EXPECT_FALSE( vec3.empty() );
 
     for( auto i{0u} ; i < vec3.size() ; ++i )
         ASSERT_EQ( vec[i+1], vec3[i] );
 }
-*/
-
 
 TEST(IntVector, CopyConstructor)
 {
