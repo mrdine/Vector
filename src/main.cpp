@@ -69,26 +69,29 @@ TEST(IntVector, RangeConstructor)
     for( auto i{0u} ; i < vec3.size() ; ++i )
         ASSERT_EQ( vec[i+1], vec3[i] );
 }
+*/
+
 
 TEST(IntVector, CopyConstructor)
 {
     // Range = the entire vector.
     sc::vector<int> vec{ 1, 2, 3, 4, 5 };
     sc::vector<int> vec2( vec );
-    ASSERT_EQ( vec2.size(), 5 );
+    ASSERT_EQ( vec2.size(), 5u );
     EXPECT_FALSE( vec2.empty() );
 
     // CHeck whether the copy worked.
     for( auto i{0u} ; i < vec2.size() ; ++i )
-        ASSERT_EQ( i+1, vec2[i] );
+        ASSERT_EQ( i+1, (unsigned long) vec2[i] );
 
     // Change the original vector and check
     // whether that also changes the second vec.
     vec[2] = 10;
     for( auto i{0u} ; i < vec.size() ; ++i )
-        ASSERT_EQ( i+1, vec2[i] );
+        ASSERT_EQ( i+1, (unsigned long) vec2[i] );
 }
 
+/*
 TEST(IntVector, MoveConstructor)
 {
     // Range = the entire vector.

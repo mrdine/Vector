@@ -176,8 +176,7 @@ namespace sc {
 	{ /* empty */ }
 
 
-
-	//Construtor que copia do vector source para esse vector
+	/// Copy constructor: copy vector source to this vector
 	vector( const vector& source )
 	    : m_size { source.m_size },
 	    m_capacity { source.m_capacity }
@@ -193,7 +192,7 @@ namespace sc {
 	{
 	    // determinar o menor tamanho para garantir que
 	    // não vamos gerar segfault.
-	    auto limit = std::min( ilist.size(), m_size);
+	    auto limit = std::min( ilist.size(), m_size); // ????????? unused?
 	    // Copiar os elementos do clone.
 	    data = new T[2*ilist.size()];
 	    m_size = ilist.size();
@@ -752,7 +751,7 @@ namespace sc {
 
 
     private:
-	T * data; //!< Area de armazenamento.
+	pointer data; //!< Area de armazenamento.
 	size_type m_size; //!< Número de elementos atualmente no vector.
 	size_type m_capacity; //!< Capacidade máxima (atual) do vector.
 	//???????????????????????? tem outro private la pg 13 l 74
