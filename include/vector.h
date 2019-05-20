@@ -11,9 +11,8 @@ namespace sc {
     template <typename T>
     class MyIterator {
     public:
-	// Below we have the iterator_traits common interface
-	/// Difference type used to calculated distance between ITERATORS
-	typedef std::ptrdiff_t difference_type;
+	// Below we have the iterator_traits common interface      
+	typedef std::ptrdiff_t difference_type; //<! Difference type used to calculated distance between ITERATORS.
 	typedef T value_type; //!< Value type the iterator points to.
 	typedef T* pointer;   //!< Pointer to the value type.
 	typedef T& reference; //!< Reference to the value type
@@ -25,35 +24,54 @@ namespace sc {
 	{ /* empty */}
 
 	/// Constructor with a pointer parameter
-	MyIterator( pointer p ):
+	MyIterator( pointer p ): // precisa 6???????????
 	    current{p}
 	{ /* empty */}
 
+	
+	/// Copy constructor: copy iterator it to this iterator.
+	/***
+	 * \param it iterator to be used as source to initialize the elements of the iterator with.
+	 */
+	MyIterator( const MyIterator& it ) 
+	{
+	    this->current = it.current;
+	}
 
-	/*
-       /// Construtor recebendo iterator
-       MyIterator(iterator& it):
-       {
-       this->current = it.current;
-       }
-	*/
-
-	MyIterator& operator=( const MyIterator& other )
+	/// Atribution operator
+	/***
+	 * \param other iterator.
+	 * \return lhs iterator.
+	 */
+	MyIterator& operator=( const MyIterator& other ) // it1 = it2
 	{
 	    this->current = other.current;
 	    return *this;
 	}
 
-	reference operator* () const
+	/// Dereference operator returning modifiable reference.
+	/***
+	 * \return reference to the object located at the position pointed by the iterator.
+	 */
+	reference operator*( void ) // *it = x
+	{
+	    return *current;
+	}
+
+	/// Dereference operator returning non-modifiable reference.
+	/***
+	 * \return reference to the object located at the position pointed by the iterator.
+	 */
+	const reference operator*( void ) const // x = *it // precisa dessa versão 8??????????
 	{
 	    return *current;
 	}
 
 	///?????????????????????? faltando
 	//pointer operator->( void ) const // ????????????????????????????????? checar só copiei
-	  //{
-	    // assert( m_ptr != nullptr );
-	    // return m_ptr;
+	//{
+	// assert( m_ptr != nullptr );
+	// return m_ptr;
 	//}
 
 
@@ -83,8 +101,8 @@ namespace sc {
 	    this->current = --c;
 	    return *this;
 	}
-
-	MyIterator operator+( int s ) // ??????????????????????? assinatura diferente
+	/*
+	MyIterator operator+( int s ) // ??????????????????????? assinatura diferente; tá sobrando?
 	{
 	    for(int i=0; i < s; i++)
 		{
@@ -93,7 +111,18 @@ namespace sc {
 		}
 	    return *this;
 	}
-
+	*/
+	
+	/// Operator difference between two iterators.
+	/***
+	 * \param rhs minuend iterator.
+	 * \return Difference between two iterators.
+	 */
+	difference_type operator-( const MyIterator &rhs ) // it = it1-it2
+	{
+	    return current - rhs.current;
+	}
+	
 	//???????????????????????????????? falta: 1 operator+() e 2 operator-() (linha 21, 22, 23) Estão como friends ali em baixo, pq?
 
 	bool operator==( const MyIterator& other ) const
@@ -137,15 +166,30 @@ namespace sc {
 		} else {return false;}
 	}
 
-	template<class V>
-	friend MyIterator operator+(difference_type, MyIterator);
-	template<class V>
-	friend MyIterator operator+(MyIterator, difference_type);
+	// tá certo 9??????????
+	//	template<class V>
+	friend MyIterator operator+( difference_type n, MyIterator it ) // n + it
+	{
+	    return it.current + n;
+	}
+	
+	//	template<class V>
+	friend MyIterator operator+( MyIterator it, difference_type n ) // it + n
+	{
+	    return it.current + n;
+	}
 
-	template<class V>
-	friend MyIterator operator-(difference_type, MyIterator);
-	template<class V>
-	friend MyIterator operator-(MyIterator, difference_type);
+	//template<class V>
+	friend MyIterator operator-( difference_type n, MyIterator it ) // n - it
+	{
+	    return it.current - n;
+	}
+	
+	//template<class V>
+	friend MyIterator operator-( MyIterator it, difference_type n ) // it - n
+	{
+	    return it.current - n;
+	}
 
     private:
 	T *current;
@@ -202,7 +246,7 @@ namespace sc {
 	    // copy atributes from list
 	    data = new T[2*ilist.size()];
 	    m_size = ilist.size();
-	    m_capacity = 2*ilist.size(); // capacidade dobrada 1????????????
+	    m_capacity = 2*ilist.size(); // capacidade dobrada 1???????????? se não for arrumar no range constructor também
 
 	    // Copy elements from list 
 	    std::copy ( ilist.begin(), ilist.end(), data ); // Pode 4???????????
@@ -228,31 +272,43 @@ namespace sc {
 	vector( iterator first, iterator last )
 	{
 
-	    size_type dis = distance(first, last);
+	    // size_type dis = distance(first, last); // modifiquei 9?????????
+	    size_type dis = last - first;
 
 	    data = new T[2*dis];
 	    m_capacity = 2*dis;
 	    m_size = dis;
 
-	    for(size_type i = 0; i < dis; i++)
-		{
-		    data[i] = *first;
-		    first++;
-		}
+	    std::cout << "\n\n size: " << dis << std::endl;
+	    std::cout << "first: " << *first << std::endl;
+	    std::cout << "last: " << *last << std::endl;
+	    for( size_type i = 0; i < dis; i++ ){
+		data[i] = *first;
+		first++;
+		std::cout << "\n\n data[" << i << "]: " << data[i] << std::endl;
+	    }
+	    std::cout << "fim\n" << std::endl;
 	}
 	//?????????????????????????? dois op= faltando... um está lá embaixo...
 
 	//=== ITERATORS
 
-	iterator begin( void ) const /// ???????????????ele não colocou como constante
+	/// Returns an iterator pointing to the first item in the list.
+	/***
+	 * \return first item in the list.
+	 */
+	iterator begin( void ) 
 	{
-	    return iterator(data);
+	    return iterator( &data[0] );
 	}
 
-	iterator end( void ) const
+	/// Returns an iterator pointing the position just after the last element of the list. 
+	/***
+	 * \return position just after the last element of the list. 
+	 */
+	iterator end( void )
 	{
-	    iterator endV(&data[m_size]);
-	    return endV;
+	    return iterator( &data[m_size] );
 	}
 
 	const_iterator cbegin( void ) const
@@ -763,9 +819,9 @@ namespace sc {
 
 
     private:
-	pointer data; //!< Area de armazenamento. // usar unique_ptr 2???????????????????????? 
-	size_type m_size; //!< Número de elementos atualmente no vector.
-	size_type m_capacity; //!< Capacidade máxima (atual) do vector.
+	pointer data; //!< Data storage area for the dynamic array. // usar unique_ptr 2????????????
+	size_type m_size; //!< Current vector size (or index past-last valid element.
+	size_type m_capacity; //!< Vector’s storage capacity.
 	
     }; // end class vector
 
