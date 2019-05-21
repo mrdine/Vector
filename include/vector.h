@@ -38,10 +38,10 @@ namespace sc {
 	    this->current = it.current;
 	}
 
-	/// Atribution operator
+	/// Attribution operator
 	/***
-	 * \param other iterator.
-	 * \return lhs iterator.
+	 * \param other iterator from rhs of attribution.
+	 * \return lhs iterator, allowing chained attribution.
 	 */
 	MyIterator& operator=( const MyIterator& other ) // it1 = it2
 	{
@@ -122,8 +122,6 @@ namespace sc {
 	{
 	    return current - rhs.current;
 	}
-	
-	//???????????????????????????????? falta: 1 operator+() e 2 operator-() (linha 21, 22, 23) Estão como friends ali em baixo, pq?
 
 	bool operator==( const MyIterator& other ) const
 	{
@@ -166,26 +164,46 @@ namespace sc {
 		} else {return false;}
 	}
 
-	// tá certo 9??????????
-	//	template<class V>
+	
+	/// Return a iterator pointing to the n-th successor in the vector from it.
+	/***
+	 * \param n number of position to move
+	 * \param it iterator you want operate
+	 * \return n-th successor in the vector from it.
+	 */
 	friend MyIterator operator+( difference_type n, MyIterator it ) // n + it
 	{
 	    return it.current + n;
 	}
-	
-	//	template<class V>
+
+	/// Return a iterator pointing to the n-th successor in the vector from it.
+	/***
+	 * \param n number of position to move
+	 * \param it iterator you want operate
+	 * \return n-th successor in the vector from it.
+	 */      
 	friend MyIterator operator+( MyIterator it, difference_type n ) // it + n
 	{
 	    return it.current + n;
 	}
 
-	//template<class V>
+	/// Return a iterator pointing to the n-th predecessor in the vector from it.
+	/***
+	 * \param n number of position to move
+	 * \param it iterator you want operate
+	 * \return n-th predecessor in the vector from it.
+	 */
 	friend MyIterator operator-( difference_type n, MyIterator it ) // n - it
 	{
 	    return it.current - n;
 	}
 	
-	//template<class V>
+	/// Return a iterator pointing to the n-th predecessor in the vector from it.
+	/***
+	 * \param n number of position to move
+	 * \param it iterator you want operate
+	 * \return n-th predecessor in the vector from it.
+	 */
 	friend MyIterator operator-( MyIterator it, difference_type n ) // it - n
 	{
 	    return it.current - n;
@@ -268,7 +286,7 @@ namespace sc {
 	 * \param first iterator pointing to the beginning of the range to copy the elements from.
 	 * \param last iterator pointing to the end of the range to copy the elements from.
 	 */
-	//template< typename InputIt > /// 5?????????????? na pg 12 tem um template lá... pq????
+	//template< typename InputIt > /// 5????????? na pg 12 tem um template lá... pq????
 	vector( iterator first, iterator last )
 	{
 
@@ -279,17 +297,18 @@ namespace sc {
 	    m_capacity = 2*dis;
 	    m_size = dis;
 
+	    /* testes, apagar depois
 	    std::cout << "\n\n size: " << dis << std::endl;
 	    std::cout << "first: " << *first << std::endl;
 	    std::cout << "last: " << *last << std::endl;
+	    */
 	    for( size_type i = 0; i < dis; i++ ){
 		data[i] = *first;
 		first++;
-		std::cout << "\n\n data[" << i << "]: " << data[i] << std::endl;
+		//std::cout << "\n\n data[" << i << "]: " << data[i] << std::endl; // testes, apagar depois
 	    }
-	    std::cout << "fim\n" << std::endl;
+	    //std::cout << "fim\n" << std::endl; // testes, apagar depois
 	}
-	//?????????????????????????? dois op= faltando... um está lá embaixo...
 
 	//=== ITERATORS
 
@@ -325,20 +344,30 @@ namespace sc {
 
 	//=== OPERATORS
 
-	// Operador =, esse vector recebe rhs
+	/// Attribution Operator. Vector receve rhs.
+	/***
+	 * \param rhs vector from rhs of attribution.
+	 * \return lhs vector, allowing chained attribution.
+	 */
 	vector& operator=( const vector& rhs )
 	{
+	    // copy atributes
 	    m_size = rhs.m_size;
 	    m_capacity = rhs.m_capacity;
 
 	    delete [] this->data;
-	    this->data = new T[ m_capacity ];
+	    this->data = new T[ m_capacity ]; // reallocate new data
 
+	    // copy data to the object that required the methold
 	    std::copy(&rhs.data[0], &rhs.data[m_size], data);
-	    //????????????????// cadê o return?
-	    return *this; /// coloquei esse checar
+	 
+	    return *this; 
 	}
 
+	vector& operator=( vector&& ) 
+	{
+
+	}
 
 	//Operador ==
 	bool operator==( const vector& other ) const
