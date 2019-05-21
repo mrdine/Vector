@@ -11,7 +11,7 @@ namespace sc {
     template <typename T>
     class MyIterator {
     public:
-	// Below we have the iterator_traits common interface      
+	// Below we have the iterator_traits common interface
 	typedef std::ptrdiff_t difference_type; //<! Difference type used to calculated distance between ITERATORS.
 	typedef T value_type; //!< Value type the iterator points to.
 	typedef T* pointer;   //!< Pointer to the value type.
@@ -28,12 +28,12 @@ namespace sc {
 	    current{p}
 	{ /* empty */}
 
-	
+
 	/// Copy constructor: copy iterator it to this iterator.
 	/***
 	 * \param it iterator to be used as source to initialize the elements of the iterator with.
 	 */
-	MyIterator( const MyIterator& it ) 
+	MyIterator( const MyIterator& it )
 	{
 	    this->current = it.current;
 	}
@@ -112,7 +112,7 @@ namespace sc {
 	    return *this;
 	}
 	*/
-	
+
 	/// Operator difference between two iterators.
 	/***
 	 * \param rhs minuend iterator.
@@ -164,7 +164,7 @@ namespace sc {
 		} else {return false;}
 	}
 
-	
+
 	/// Return a iterator pointing to the n-th successor in the vector from it.
 	/***
 	 * \param n number of position to move
@@ -181,7 +181,7 @@ namespace sc {
 	 * \param n number of position to move
 	 * \param it iterator you want operate
 	 * \return n-th successor in the vector from it.
-	 */      
+	 */
 	friend MyIterator operator+( MyIterator it, difference_type n ) // it + n
 	{
 	    return it.current + n;
@@ -197,7 +197,7 @@ namespace sc {
 	{
 	    return it.current - n;
 	}
-	
+
 	/// Return a iterator pointing to the n-th predecessor in the vector from it.
 	/***
 	 * \param n number of position to move
@@ -218,14 +218,14 @@ namespace sc {
     class vector {
 
     public:
-        
-	using size_type = unsigned long; //!< The size type. 
+
+	using size_type = unsigned long; //!< The size type.
 	using pointer = T*;   //!< Pointer to a value stored in the container.
 	using reference = T&; //!< Reference to a value stored in the container.
 	using const_reference = const T&; //!< Const reference to a value stored in the container.
 	using iterator = MyIterator< T >;
 	using const_iterator = MyIterator< const T >;
-	
+
 
 	//=== SPECIAL MEMBERS
 
@@ -255,6 +255,22 @@ namespace sc {
 	    std::copy( &source.data[0], &source.data[m_size], data );
 	}
 
+  /*
+   * Precisa???
+  /// Move constructor: move this vector source to other vector
+  vector(vector&& other):
+      data{ other.data},
+      m_capacity{ other.m_capacity},
+      m_size{ other.m_size }
+  {
+    // resets the other vector
+    other.m_size = 0;
+    other.m_capacity = 0;
+		other.data = nullptr;
+  }
+  */
+
+
 	/// List constructor: Constructor from a initializer list
 	/***
 	 * \param ilist initializer list to initialize the elements of the vector with
@@ -262,11 +278,11 @@ namespace sc {
 	vector( std::initializer_list<T> ilist )
 	{
 	    // copy atributes from list
-	    data = new T[2*ilist.size()];
+	    data = new T[ilist.size()];
 	    m_size = ilist.size();
-	    m_capacity = 2*ilist.size(); // capacidade dobrada 1???????????? se não for arrumar no range constructor também
+	    m_capacity = ilist.size(); // capacidade dobrada 1???????????? se não for arrumar no range constructor também
 
-	    // Copy elements from list 
+	    // Copy elements from list
 	    std::copy ( ilist.begin(), ilist.end(), data ); // Pode 4???????????
 	}
 
@@ -280,7 +296,7 @@ namespace sc {
 	// 3?????????????????????????? faltando...
 	// vector( vector && );
 
-	
+
 	/// Range constructor: Constructs the vector with the contents of the range [first, last) .
 	/***
 	 * \param first iterator pointing to the beginning of the range to copy the elements from.
@@ -316,14 +332,14 @@ namespace sc {
 	/***
 	 * \return first item in the list.
 	 */
-	iterator begin( void ) 
+	iterator begin( void )
 	{
 	    return iterator( &data[0] );
 	}
 
-	/// Returns an iterator pointing the position just after the last element of the list. 
+	/// Returns an iterator pointing the position just after the last element of the list.
 	/***
-	 * \return position just after the last element of the list. 
+	 * \return position just after the last element of the list.
 	 */
 	iterator end( void )
 	{
@@ -360,12 +376,46 @@ namespace sc {
 
 	    // copy data to the object that required the methold
 	    std::copy(&rhs.data[0], &rhs.data[m_size], data);
-	 
-	    return *this; 
+
+	    return *this;
 	}
 
-	//vector& operator=( vector&& ) // falta!!! ?????????????????
-	//{}
+  /// Move AssignOperator
+  vector& operator=(vector&& other)
+  {
+    // Self-assignment detection
+		if (&other == this)
+			return *this;
+
+		// Release any resource we're holding
+		delete data;
+
+		// Transfer ownership of a.m_ptr to m_ptr
+		data = other.data;
+    m_size = other.m_size;
+    m_capacity = other.m_capacity;
+
+    // resets the other vector
+    other.m_size = 0;
+    other.m_capacity = 0;
+		other.data = nullptr;
+
+		return *this;
+  }
+
+  /// initializer_list assigment operator
+  vector& operator=( std::initializer_list<T> ilist )
+  {
+    // resets vector
+    delete data;
+    // copy atributes from list
+    data = new T[ilist.size()];
+    m_size = ilist.size();
+    m_capacity = ilist.size(); // capacidade dobrada 1???????????? se não for arrumar no range constructor também
+
+    // Copy elements from list
+    std::copy ( ilist.begin(), ilist.end(), data ); // Pode 4???????????
+  }
 
 	//Operador ==
 	bool operator==( const vector& other ) const
@@ -478,11 +528,13 @@ namespace sc {
 	// Limpa todo o vetor (deve ser NULL?) e redefinindo m_size = 0
 	void clear( void )
 	{
-	    for(auto i = 0; i < m_size; i++)
-		{
-		    data[i] = NULL; //??????????? null eh um ponteiro nulo, tá certo??
-		}
-	    m_size = 0;
+      // limpa data
+	    delete data;
+
+      // Aloca a capacidade antiga do vector
+      data = new T[ m_capacity ];
+
+      m_size = 0;
 	}
 
 	//Insere elemento na frente do vector
@@ -768,18 +820,24 @@ namespace sc {
 
 	//=== ELEMENT ACCESS METHODS
 
-	//?????????????????? falta o outro back
-	const T& back( void ) const;
 
-	T& back( void ) //const // ?????????????? não tem const no pdf
+	const T& back( void ) const
+  {
+    return data[m_size-1];
+  }
+
+	T& back( void )
 	{
 	    return data[m_size-1];
 	}
 
-	//?????????????????? falta o outro front
-	const T& front( void ) const;
 
-	T& front( void ) //const // ?????????????? não tem const no pdf
+	const T& front( void ) const
+  {
+    return data[0];
+  }
+
+	T& front( void )
 	{
 	    return data[0];
 	}
@@ -818,8 +876,7 @@ namespace sc {
 	{
 	    if(pos >= 0 && pos < m_size)
 		{
-		    const T result = data[pos];
-		    return result;
+		    return data[pos];
 		}
 	    else
 		{
@@ -849,7 +906,7 @@ namespace sc {
 	pointer data; //!< Data storage area for the dynamic array. // usar unique_ptr 2????????????
 	size_type m_size; //!< Current vector size (or index past-last valid element.
 	size_type m_capacity; //!< Vector’s storage capacity.
-	
+
     }; // end class vector
 
 } // end namespace sc

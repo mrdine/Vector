@@ -14,13 +14,13 @@
 
 TEST(IntVector, DefaultConstructor)
 {
-    
+
     sc::vector<int> vec;
-  
+
     EXPECT_EQ( vec.size(), 0u );
     EXPECT_EQ( vec.capacity(), 0u );
     EXPECT_TRUE( vec.empty() );
-    
+
 }
 
 
@@ -62,12 +62,12 @@ TEST(IntVector, RangeConstructor)
     /* testes, apagar depois
     std::cout << "\n\n inside main: " << std::endl;
     std::cout << "first: " << *std::next( vec.begin(), 1 ) << std::endl;
-    std::cout << "last: " << *( vec.begin()+ 3 ) << std::endl;    
+    std::cout << "last: " << *( vec.begin()+ 3 ) << std::endl;
     std::cout << "end main\n" << std::endl;
     */
-	    
+
     // sc::vector<int> vec3( std::next( vec.begin(), 1 ), std::next( vec.begin(), 3 ) ); // não funciona, testar depois..
-    sc::vector<int> vec3( vec.begin() + 1 , vec.begin() + 3  ); 
+    sc::vector<int> vec3( vec.begin() + 1 , vec.begin() + 3  );
     ASSERT_EQ( vec3.size(), 2u );
     EXPECT_FALSE( vec3.empty() );
 
@@ -131,7 +131,9 @@ TEST(IntVector, MoveAssignOperator)
     sc::vector<int> vec{ 1, 2, 3, 4, 5 };
     sc::vector<int> vec2;
 
+
     vec2 = std::move( vec );
+
     ASSERT_EQ( vec2.size(), 5u );
     ASSERT_FALSE( vec2.empty() );
     EXPECT_EQ( vec.size(), 0u );
@@ -141,8 +143,9 @@ TEST(IntVector, MoveAssignOperator)
     // CHeck whether the copy worked.
     for( auto i{0u} ; i < vec2.size() ; ++i )
         ASSERT_EQ( i+1, (unsigned long) vec2[i] );
+
 }
-/*
+
 TEST(IntVector, ListInitializerAssign)
 {
     // Range = the entire vector.
@@ -281,6 +284,7 @@ TEST(IntVector, Front)
         vec.pop_front();
     }
 }
+
 TEST(IntVector, FrontConst)
 {
     // #1 From an empty vector.
@@ -370,6 +374,7 @@ TEST(IntVector, OperatorBracketsLHS)
 
 TEST(IntVector, AtRHS)
 {
+
     const sc::vector<int> vec { 1, 2, 3, 4, 5 };
     const sc::vector<int> vec2 { 1, 2, 3, 4, 5 };
 
@@ -382,8 +387,9 @@ TEST(IntVector, AtRHS)
     { worked = true; }
 
     ASSERT_TRUE( worked );
+    
 }
-
+/*
 TEST(IntVector, AtLHS)
 {
     sc::vector<int> vec { 1, 2, 3, 4, 5 };
