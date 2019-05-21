@@ -67,18 +67,17 @@ namespace sc {
 	    return *current;
 	}
 
-	///?????????????????????? faltando
-	//pointer operator->( void ) const // ????????????????????????????????? checar só copiei
-	//{
-	// assert( m_ptr != nullptr );
-	// return m_ptr;
-	//}
+	
+	pointer operator->( void ) const 
+	{
+	 assert( current != nullptr );
+	 return current;
+	}
 
 
 	MyIterator operator++( ) // ++it;
 	{
-	    pointer c = this->current;
-	    this->current = c++;
+	    this->current++;
 	    return *this;
 	}
 
@@ -91,27 +90,17 @@ namespace sc {
 
 	MyIterator operator--( ) // --it;
 	{
-	    pointer c = this->current;
-	    this->current = c--;
+	    this->current--;
 	    return *this;
 	}
+      
 	MyIterator operator--( int ) // it--;
 	{
 	    pointer c = this->current;
 	    this->current = --c;
 	    return *this;
 	}
-	/*
-	MyIterator operator+( int s ) // ??????????????????????? assinatura diferente; tá sobrando?
-	{
-	    for(int i=0; i < s; i++)
-		{
-		    pointer c = this->current;
-		    this->current = c++;
-		}
-	    return *this;
-	}
-	*/
+
 
 	/// Operator difference between two iterators.
 	/***
@@ -284,10 +273,9 @@ namespace sc {
 	 * \param first iterator pointing to the beginning of the range to copy the elements from.
 	 * \param last iterator pointing to the end of the range to copy the elements from.
 	 */
-	//template< typename InputIt > /// 5????????? na pg 12 tem um template lá... pq????
-	vector( iterator first, iterator last )
+	template< typename InputIt > 
+	vector( InputIt first, InputIt last )
 	{
-
 	    
 	    size_type dis = last - first;
 
@@ -295,17 +283,10 @@ namespace sc {
 	    m_capacity = dis;
 	    m_size = dis;
 
-	    //testes, apagar depois
-	    std::cout << "\n\n size: " << dis << std::endl;
-	    std::cout << "first: " << *first << std::endl;
-	    std::cout << "last: " << *last << std::endl;
-	    
 	    for( size_type i = 0; i < dis; i++ ){
 		data[i] = *first;
 		first++;
-		std::cout << "\n\n data[" << i << "]: " << data[i] << std::endl; // testes, apagar depois
 	    }
-	    std::cout << "fim\n" << std::endl; // testes, apagar depois
 	}
 
 	//=== ITERATORS
