@@ -240,7 +240,7 @@ TEST(IntVector, PopBack)
             ASSERT_EQ( i+1, (unsigned long) vec[i] );
     }
 }
-/*
+
 TEST(IntVector, PopFront)
 {
     // #1 From an empty vector.
@@ -252,7 +252,7 @@ TEST(IntVector, PopFront)
         vec.pop_front();
         // Checke whether we have the same list except for the last.
         for( auto i{0u} ; i < vec.size() ; ++i )
-            ASSERT_EQ( start+i, vec[i] );
+            ASSERT_EQ( start+i, (unsigned long) vec[i] );
 
         start++;
     }
@@ -319,27 +319,27 @@ TEST(IntVector, AssignCountValue)
     // #1 From an empty vector.
     sc::vector<long> vec{ 1, 2, 3, 4, 5 };
 
-    ASSERT_EQ( vec.size(), 5 );
+    ASSERT_EQ( vec.size(), 5u );
     auto original_cap = vec.capacity();
 
     // Test assign with a count smaller than the original vec size.
     long value{-4};
     vec.assign( 3, value );
-    ASSERT_EQ( vec.size(), 3 );
+    ASSERT_EQ( vec.size(), 3u );
     // Capacity should be the same.
     EXPECT_EQ( vec.capacity(), original_cap );
     // Verify the elements.
     for ( auto i{0u} ; i < vec.size() ; ++i )
-        ASSERT_EQ( value, vec[i] );
+        ASSERT_EQ( value, (long) vec[i] );
 
     // Test assign with a count GREATER than the original vec size.
     long new_value{42};
     vec.assign( 10, new_value );
-    ASSERT_EQ( vec.size(), 10 );
+    ASSERT_EQ( vec.size(), 10u );
     EXPECT_GE( vec.capacity(), original_cap );
     // Verify the elements.
     for ( auto i{0u} ; i < vec.size() ; ++i )
-        ASSERT_EQ( new_value, vec[i] );
+        ASSERT_EQ( new_value, (long) vec[i] );
     
     
 }
@@ -354,6 +354,7 @@ TEST(IntVector, OperatorBracketsRHS)
     for ( auto i{0u} ; i < vec.size() ; ++i )
         ASSERT_EQ( vec[i], vec2[i]);
 }
+
 
 
 TEST(IntVector, OperatorBracketsLHS)
@@ -415,7 +416,7 @@ TEST(IntVector, Capacity)
     
     auto i{0};
     for( const auto & e : vec )
-        //ASSERT_EQ( e, ++i );
+        ASSERT_EQ( e, ++i );
         std::cout << "oi" << std::endl;
        
 }
@@ -430,7 +431,7 @@ TEST(IntVector, ShrinkToFit)
     vec.pop_back();
     ASSERT_EQ( vec.capacity(), 5u );
     vec.shrink_to_fit();
-    ASSERT_EQ( vec.capacity(), 3 );
+    ASSERT_EQ( vec.capacity(), 3u );
     auto i{0};
     for( const auto & e : vec )
         ASSERT_EQ( e , ++i );
@@ -477,7 +478,7 @@ TEST(IntVector, InsertSingleValueAtPosition)
     vec.insert( vec.end(), 7 );
     ASSERT_EQ( vec , ( sc::vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 } ) );
 }
-
+/*
 TEST(IntVector, InsertRange)
 {
     // Aux arrays.
