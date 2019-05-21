@@ -62,24 +62,24 @@ namespace sc {
 	/***
 	 * \return reference to the object located at the position pointed by the iterator.
 	 */
-	const reference operator*( void ) const // x = *it 
+	const reference operator*( void ) const // x = *it
 	{
 	    return *current;
 	}
 
-     
-	/// arrow operator: 
+
+	/// arrow operator:
 	/***
 	 * \return pointer
 	 */
-	/*pointer operator->( void ) const 
+	/*pointer operator->( void ) const
 	{
 	    assert( current != nullptr );
 	    return current;
 	}
 	*/
 
-	/// Pre-increment operator: increment iterator on one unit  
+	/// Pre-increment operator: increment iterator on one unit
 	/***
 	 * \return iterator incremented on one unit
 	 */
@@ -89,20 +89,20 @@ namespace sc {
 	    return *this;
 	}
 
-	/// Pos-increment operator: increment iterator on one unit  
+	/// Pos-increment operator: increment iterator on one unit
 	/***
 	 * \param int only to differentiate from pre-increment operator.
 	 * \return iterator before incrementation
-	 */ 
+	 */
 	MyIterator operator++( int ) // it++;
 	{
-	    
-	    iterator tmp (current); // create temporary iterator
+
+	    MyIterator tmp (current); // create temporary iterator
 	    this->current++; // increment iterator
 	    return tmp; // return it before incrementation
 	}
-	
-	/// Pre-decrement operator: decrement iterator on one unit  
+
+	/// Pre-decrement operator: decrement iterator on one unit
 	/***
 	 * \return iterator decremented on one unit
 	 */
@@ -112,14 +112,14 @@ namespace sc {
 	    return *this;
 	}
 
-	/// Pos-decrement operator: decrement iterator on one unit  
+	/// Pos-decrement operator: decrement iterator on one unit
 	/***
 	 * \param int only to differentiate from pre-decrement operator.
 	 * \return iterator before decrementation
-	 */ 
+	 */
 	MyIterator operator--( int ) // it--;
 	{
-	    iterator tmp (current); // create temporary iterator
+	    MyIterator tmp (current); // create temporary iterator
 	    this->current--; // decrement iterator
 	    return tmp; // return it before decrementation
 	}
@@ -135,21 +135,14 @@ namespace sc {
 	    return current - rhs.current;
 	}
 
-	bool operator==( const MyIterator& other ) const
+	bool operator==( const MyIterator& other )
 	{
 	    return this->current == other.current;
 	}
 
-	bool operator!=( const MyIterator& other ) const
-	{
-	    if(this->current == other.current)
-		{
-		    return false;
-		} else {return true;}
 
-	}
 
-	bool operator!= ( MyIterator& other ) const //????????????????????????????
+	bool operator!= ( const MyIterator& other ) //????????????????????????????
 	{
 	    if(this->current == other.current)
 		{
@@ -221,6 +214,7 @@ namespace sc {
 	    return it.current - n;
 	}
 
+
     private:
 	T *current;
     };
@@ -284,10 +278,10 @@ namespace sc {
 	    // copy atributes from list
 	    data = new T[ilist.size()];
 	    m_size = ilist.size();
-	    m_capacity = ilist.size(); 
+	    m_capacity = ilist.size();
 
 	    // Copy elements from list
-	    std::copy ( ilist.begin(), ilist.end(), data ); 
+	    std::copy ( ilist.begin(), ilist.end(), data );
 	}
 
 
@@ -296,10 +290,10 @@ namespace sc {
 	 * \param first iterator pointing to the beginning of the range to copy the elements from.
 	 * \param last iterator pointing to the end of the range to copy the elements from.
 	 */
-	template< typename InputIt > 
+	template< typename InputIt >
 	vector( InputIt first, InputIt last )
 	{
-	    
+
 	    size_type dis = last - first;
 
 	    data = new T[dis];
@@ -318,7 +312,7 @@ namespace sc {
 	/***
 	 * \return first item in the list.
 	 */
-	iterator begin( void )
+	iterator begin( void ) const
 	{
 	    return iterator( &data[0] );
 	}
@@ -327,7 +321,7 @@ namespace sc {
 	/***
 	 * \return position just after the last element of the list.
 	 */
-	iterator end( void )
+	iterator end( void ) const
 	{
 	    return iterator( &data[m_size] );
 	}
@@ -368,7 +362,7 @@ namespace sc {
 
 	/// Move AssignOperator
 	/***
-	 * \param 
+	 * \param
 	 * \return
 	 */
 	vector& operator=( vector&& other )
@@ -393,7 +387,7 @@ namespace sc {
 	    return *this;
 	}
 
-	
+
 	/// initializer_list assigment operator
   vector& operator=( std::initializer_list<T> ilist )
   {
@@ -402,37 +396,13 @@ namespace sc {
     // copy atributes from list
     data = new T[ilist.size()];
     m_size = ilist.size();
-    m_capacity = ilist.size(); 
+    m_capacity = ilist.size();
 
     // Copy elements from list
-    std::copy ( ilist.begin(), ilist.end(), data ); 
+    std::copy ( ilist.begin(), ilist.end(), data );
   }
 
-	//Operador ==
-	bool operator==( const vector& other ) const
-	{
-	    //Ponteiro para this->data
-	    T* myData = data;
-	    //Ponteiro para data do vector other
-	    T* otherData = other.data;
 
-	    //Se o tamanho do meu vector for igual ao do outro vector, então analisar cada valor do myData com a respectiva posição do otherData
-	    if(m_size == other.m_size)
-		{
-		    //Contar até o ultimo elemento
-		    size_type contador = 0;
-		    while(contador < m_size)
-			{
-			    //Se o valor do myData for diferente do otherData na respectiva posição, então retornar false
-			    if(myData[contador] != otherData[contador])
-				{
-				    return false;
-				}
-			    contador++;
-			}
-		    return true;
-		} else {return false;}
-	}
 
 	//Operador !=
 	bool operator !=(const vector& other) const
@@ -873,6 +843,42 @@ namespace sc {
 	    return os;
 	}
 
+  //Operador ==
+	friend bool operator==( const vector& other1, const vector& other2 )
+	{
+	    //Ponteiro para this->data
+	    T* myData = other1.data;
+	    //Ponteiro para data do vector other
+	    T* otherData = other2.data;
+
+	    //Se o tamanho do meu vector for igual ao do outro vector, então analisar cada valor do myData com a respectiva posição do otherData
+	    if(other1.m_size == other1.m_size)
+		{
+		    //Contar até o ultimo elemento
+		    size_type contador = 0;
+		    while(contador < other1.m_size)
+			{
+			    //Se o valor do myData for diferente do otherData na respectiva posição, então retornar false
+			    if(myData[contador] != otherData[contador])
+				{
+				    return false;
+				}
+			    contador++;
+			}
+		    return true;
+		} else {return false;}
+	}
+
+  //Operador !=
+	friend bool operator!=( const vector& other1, const vector& other2 )
+	{
+
+	    //Se o tamanho do meu vector for igual ao do outro vector, então analisar cada valor do myData com a respectiva posição do otherData
+	    if(other1.m_size == other1.m_size)
+		{
+		    return !(other1 == other2);
+		} else {return true;}
+	}
 	// ??????????????????/ falta friend function swap pg 13 l 68
 
 

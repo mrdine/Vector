@@ -57,7 +57,7 @@ TEST(IntVector, RangeConstructor)
         ASSERT_EQ( i+1, (unsigned long) vec[i] );
 
     // Range is part of the vector.
-    sc::vector<int> vec3( std::next( vec.begin(), 1 ), std::next( vec.begin(), 3 ) ); 
+    sc::vector<int> vec3( std::next( vec.begin(), 1 ), std::next( vec.begin(), 3 ) );
     ASSERT_EQ( vec3.size(), 2u );
     EXPECT_FALSE( vec3.empty() );
 
@@ -99,7 +99,7 @@ TEST(IntVector, MoveConstructor)
 }
 
 
-/*
+
 TEST(IntVector, AssignOperator)
 {
     // Range = the entire vector.
@@ -315,7 +315,7 @@ TEST(IntVector, BackConst)
 
 TEST(IntVector, AssignCountValue)
 {
-    
+
     // #1 From an empty vector.
     sc::vector<long> vec{ 1, 2, 3, 4, 5 };
 
@@ -340,8 +340,8 @@ TEST(IntVector, AssignCountValue)
     // Verify the elements.
     for ( auto i{0u} ; i < vec.size() ; ++i )
         ASSERT_EQ( new_value, (long) vec[i] );
-    
-    
+
+
 }
 
 
@@ -383,7 +383,7 @@ TEST(IntVector, AtRHS)
     { worked = true; }
 
     ASSERT_TRUE( worked );
-    
+
 }
 
 TEST(IntVector, AtLHS)
@@ -413,12 +413,12 @@ TEST(IntVector, Capacity)
     ASSERT_EQ( vec.capacity(), 10u );
     vec.reserve(3); // Nothing happens here.
     ASSERT_EQ( vec.capacity(), 10u );
-    
+
     auto i{0};
     for( const auto & e : vec )
         ASSERT_EQ( e, ++i );
-        std::cout << "oi" << std::endl;
-       
+
+
 }
 
 TEST(IntVector, ShrinkToFit)
@@ -436,7 +436,7 @@ TEST(IntVector, ShrinkToFit)
     for( const auto & e : vec )
         ASSERT_EQ( e , ++i );
 }
-
+/*
 TEST(IntVector, OperatorEqual)
 {
     // #1 From an empty vector.
