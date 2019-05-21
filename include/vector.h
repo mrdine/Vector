@@ -62,7 +62,7 @@ namespace sc {
 	/***
 	 * \return reference to the object located at the position pointed by the iterator.
 	 */
-	const reference operator*( void ) const // x = *it // precisa dessa versão 8??????????
+	const reference operator*( void ) const // x = *it 
 	{
 	    return *current;
 	}
@@ -275,26 +275,9 @@ namespace sc {
 	    m_capacity = ilist.size(); 
 
 	    // Copy elements from list
-	    std::copy ( ilist.begin(), ilist.end(), data ); // Pode 4???????????
+	    std::copy ( ilist.begin(), ilist.end(), data ); 
 	}
 
-	// 3?????????????????????????? faltando...
-	// vector( vector && );
-
-	/*
-	 * Precisa???
-	 /// Move constructor: move this vector source to other vector
-	 vector(vector&& other):
-	 data{ other.data},
-	 m_capacity{ other.m_capacity},
-	 m_size{ other.m_size }
-	 {
-	 // resets the other vector
-	 other.m_size = 0;
-	 other.m_capacity = 0;
-	 other.data = nullptr;
-	 }
-	*/
 
 	/// Range constructor: Constructs the vector with the contents of the range [first, last) .
 	/***
@@ -305,24 +288,24 @@ namespace sc {
 	vector( iterator first, iterator last )
 	{
 
-	    // size_type dis = distance(first, last); // modifiquei 9?????????
+	    
 	    size_type dis = last - first;
 
 	    data = new T[dis];
 	    m_capacity = dis;
 	    m_size = dis;
 
-	    /* testes, apagar depois
+	    //testes, apagar depois
 	    std::cout << "\n\n size: " << dis << std::endl;
 	    std::cout << "first: " << *first << std::endl;
 	    std::cout << "last: " << *last << std::endl;
-	    */
+	    
 	    for( size_type i = 0; i < dis; i++ ){
 		data[i] = *first;
 		first++;
-		//std::cout << "\n\n data[" << i << "]: " << data[i] << std::endl; // testes, apagar depois
+		std::cout << "\n\n data[" << i << "]: " << data[i] << std::endl; // testes, apagar depois
 	    }
-	    //std::cout << "fim\n" << std::endl; // testes, apagar depois
+	    std::cout << "fim\n" << std::endl; // testes, apagar depois
 	}
 
 	//=== ITERATORS
@@ -406,7 +389,7 @@ namespace sc {
 	    return *this;
 	}
 
-	// Que função é essa?    1???????????????
+	
 	/// initializer_list assigment operator
   vector& operator=( std::initializer_list<T> ilist )
   {
@@ -499,35 +482,6 @@ namespace sc {
 
 
 	///=== MODIFIERS METHODS
-	//Retorna o numero de saltos do first até o last, se first > last, retorna negativamente o numero de saltos de last até first
-	size_type distance( iterator first, iterator last ) // pq isso? 7???????????
-	{
-	    /*
-	     * Lançando exceção quando não deveria
-	     if(first < last)
-	     {
-	     size_type dis = 0;
-	     iterator it;
-	     for(it = first; it != last; it++)
-	     {
-	     dis++;
-	     }
-	     return dis;
-	     }
-	     else
-	     {
-	     throw std::invalid_argument("foi passado o first > last");
-	     }
-	    */
-	    size_type dis = 0;
-	    iterator it;
-	    for(it = first; it != last; it++)
-		{
-		    dis++;
-		}
-	    return dis;
-
-	}
 
 	// Limpa todo o vetor (deve ser NULL?) e redefinindo m_size = 0
 	void clear( void )
@@ -712,8 +666,20 @@ namespace sc {
 	/// Repreenche o vector com count vezes o valor value;
 	void assign( size_type count, const T & value )
 	{
-	    m_size = count;
-	    for(size_type i = 0; i < count; i++)
+		if(m_capacity < count)
+		{
+			reserve(count);
+		}
+
+		// limpa o vector
+		delete [] data;
+		// aloca o espaço necessario
+		data = new T[count];
+		// restitui o tamanho
+		m_size = count;
+
+		// preenche o vector com o count
+		for(size_type i = 0; i < count; i++)
 		{
 		    data[i] = value;
 		}
@@ -907,7 +873,7 @@ namespace sc {
 
 
     private:
-	pointer data; //!< Data storage area for the dynamic array. // usar unique_ptr 2????????????
+	pointer data; //!< Data storage area for the dynamic array.
 	size_type m_size; //!< Current vector size (or index past-last valid element.
 	size_type m_capacity; //!< Vector’s storage capacity.
 
