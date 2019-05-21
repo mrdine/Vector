@@ -241,6 +241,13 @@ namespace sc {
 	{ /* empty */ }
 
 
+	/// Destructor
+	~vector( void )
+	{
+	    delete [] data;
+	}
+
+
 	/// Copy constructor: copy vector source to this vector
 	/***
 	 * \param source vector to be used as source to initialize the elements of the vector with.
@@ -255,21 +262,6 @@ namespace sc {
 	    std::copy( &source.data[0], &source.data[m_size], data );
 	}
 
-  /*
-   * Precisa???
-  /// Move constructor: move this vector source to other vector
-  vector(vector&& other):
-      data{ other.data},
-      m_capacity{ other.m_capacity},
-      m_size{ other.m_size }
-  {
-    // resets the other vector
-    other.m_size = 0;
-    other.m_capacity = 0;
-		other.data = nullptr;
-  }
-  */
-
 
 	/// List constructor: Constructor from a initializer list
 	/***
@@ -280,22 +272,29 @@ namespace sc {
 	    // copy atributes from list
 	    data = new T[ilist.size()];
 	    m_size = ilist.size();
-	    m_capacity = ilist.size(); // capacidade dobrada 1???????????? se não for arrumar no range constructor também
+	    m_capacity = ilist.size(); 
 
 	    // Copy elements from list
 	    std::copy ( ilist.begin(), ilist.end(), data ); // Pode 4???????????
 	}
 
-
-	/// Destructor
-	~vector( void )
-	{
-	    delete [] data;
-	}
-
 	// 3?????????????????????????? faltando...
 	// vector( vector && );
 
+	/*
+	 * Precisa???
+	 /// Move constructor: move this vector source to other vector
+	 vector(vector&& other):
+	 data{ other.data},
+	 m_capacity{ other.m_capacity},
+	 m_size{ other.m_size }
+	 {
+	 // resets the other vector
+	 other.m_size = 0;
+	 other.m_capacity = 0;
+	 other.data = nullptr;
+	 }
+	*/
 
 	/// Range constructor: Constructs the vector with the contents of the range [first, last) .
 	/***
@@ -309,8 +308,8 @@ namespace sc {
 	    // size_type dis = distance(first, last); // modifiquei 9?????????
 	    size_type dis = last - first;
 
-	    data = new T[2*dis];
-	    m_capacity = 2*dis;
+	    data = new T[dis];
+	    m_capacity = dis;
 	    m_size = dis;
 
 	    /* testes, apagar depois
@@ -380,41 +379,46 @@ namespace sc {
 	    return *this;
 	}
 
-  /// Move AssignOperator
-  vector& operator=(vector&& other)
-  {
-    // Self-assignment detection
-		if (&other == this)
-			return *this;
-
-		// Release any resource we're holding
-		delete data;
-
-		// Transfer ownership of a.m_ptr to m_ptr
-		data = other.data;
-    m_size = other.m_size;
-    m_capacity = other.m_capacity;
-
-    // resets the other vector
-    other.m_size = 0;
-    other.m_capacity = 0;
-		other.data = nullptr;
-
+	/// Move AssignOperator
+	/***
+	 * \param 
+	 * \return
+	 */
+	vector& operator=( vector&& other )
+	{
+	    // Self-assignment detection
+	    if (&other == this)
 		return *this;
-  }
 
-  /// initializer_list assigment operator
+	    // Release any resource we're holding
+	    delete[] data;
+
+	    // Transfer ownership of a.m_ptr to m_ptr
+	    data = other.data;
+	    m_size = other.m_size;
+	    m_capacity = other.m_capacity;
+
+	    // resets the other vector
+	    other.m_size = 0;
+	    other.m_capacity = 0;
+	    other.data = nullptr;
+
+	    return *this;
+	}
+
+	// Que função é essa?    1???????????????
+	/// initializer_list assigment operator
   vector& operator=( std::initializer_list<T> ilist )
   {
     // resets vector
-    delete data;
+    delete [] data;
     // copy atributes from list
     data = new T[ilist.size()];
     m_size = ilist.size();
-    m_capacity = ilist.size(); // capacidade dobrada 1???????????? se não for arrumar no range constructor também
+    m_capacity = ilist.size(); 
 
     // Copy elements from list
-    std::copy ( ilist.begin(), ilist.end(), data ); // Pode 4???????????
+    std::copy ( ilist.begin(), ilist.end(), data ); 
   }
 
 	//Operador ==
@@ -529,7 +533,7 @@ namespace sc {
 	void clear( void )
 	{
       // limpa data
-	    delete data;
+	    delete[] data;
 
       // Aloca a capacidade antiga do vector
       data = new T[ m_capacity ];

@@ -34,8 +34,6 @@ TEST(IntVector, ConstructorSize)
 
 }
 
-
-
 TEST(IntVector, ListConstructor)
 {
     sc::vector<int> vec{ 1, 2, 3, 4, 5 };
@@ -109,6 +107,7 @@ TEST(IntVector, MoveConstructor)
 }
 
 
+/*
 TEST(IntVector, AssignOperator)
 {
     // Range = the entire vector.
@@ -389,7 +388,7 @@ TEST(IntVector, AtRHS)
     ASSERT_TRUE( worked );
     
 }
-/*
+
 TEST(IntVector, AtLHS)
 {
     sc::vector<int> vec { 1, 2, 3, 4, 5 };
