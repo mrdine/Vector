@@ -116,12 +116,12 @@ TEST(IntVector, AssignOperator)
     sc::vector<int> vec2;
 
     vec2 = vec;
-    ASSERT_EQ( vec2.size(), 5 );
+    ASSERT_EQ( vec2.size(), 5u );
     EXPECT_FALSE( vec2.empty() );
 
     // CHeck whether the copy worked.
     for( auto i{0u} ; i < vec2.size() ; ++i )
-        ASSERT_EQ( i+1, vec2[i] );
+        ASSERT_EQ( i+1, (unsigned long) vec2[i] );
 }
 
 
@@ -132,15 +132,15 @@ TEST(IntVector, MoveAssignOperator)
     sc::vector<int> vec2;
 
     vec2 = std::move( vec );
-    ASSERT_EQ( vec2.size(), 5 );
+    ASSERT_EQ( vec2.size(), 5u );
     ASSERT_FALSE( vec2.empty() );
-    EXPECT_EQ( vec.size(), 0 );
-    EXPECT_EQ( vec.capacity(), 0 );
+    EXPECT_EQ( vec.size(), 0u );
+    EXPECT_EQ( vec.capacity(), 0u );
     EXPECT_TRUE( vec.empty() );
 
     // CHeck whether the copy worked.
     for( auto i{0u} ; i < vec2.size() ; ++i )
-        ASSERT_EQ( i+1, vec2[i] );
+        ASSERT_EQ( i+1, (unsigned long) vec2[i] );
 }
 /*
 TEST(IntVector, ListInitializerAssign)

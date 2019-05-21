@@ -364,10 +364,8 @@ namespace sc {
 	    return *this; 
 	}
 
-	vector& operator=( vector&& ) 
-	{
-
-	}
+	//vector& operator=( vector&& ) // falta!!! ?????????????????
+	//{}
 
 	//Operador ==
 	bool operator==( const vector& other ) const
