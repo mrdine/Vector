@@ -67,38 +67,61 @@ namespace sc {
 	    return *current;
 	}
 
-	
-	pointer operator->( void ) const 
+     
+	/// arrow operator: 
+	/***
+	 * \return pointer
+	 */
+	/*pointer operator->( void ) const 
 	{
-	 assert( current != nullptr );
-	 return current;
+	    assert( current != nullptr );
+	    return current;
 	}
+	*/
 
-
-	MyIterator operator++( ) // ++it;
+	/// Pre-increment operator: increment iterator on one unit  
+	/***
+	 * \return iterator incremented on one unit
+	 */
+	MyIterator operator++( void ) // ++it;
 	{
 	    this->current++;
 	    return *this;
 	}
 
+	/// Pos-increment operator: increment iterator on one unit  
+	/***
+	 * \param int only to differentiate from pre-increment operator.
+	 * \return iterator before incrementation
+	 */ 
 	MyIterator operator++( int ) // it++;
 	{
-	    pointer c = this->current;
-	    this->current = ++c;
-	    return *this;
+	    
+	    iterator tmp (current); // create temporary iterator
+	    this->current++; // increment iterator
+	    return tmp; // return it before incrementation
 	}
-
-	MyIterator operator--( ) // --it;
+	
+	/// Pre-decrement operator: decrement iterator on one unit  
+	/***
+	 * \return iterator decremented on one unit
+	 */
+	MyIterator operator--( void ) // --it;
 	{
 	    this->current--;
 	    return *this;
 	}
-      
+
+	/// Pos-decrement operator: decrement iterator on one unit  
+	/***
+	 * \param int only to differentiate from pre-decrement operator.
+	 * \return iterator before decrementation
+	 */ 
 	MyIterator operator--( int ) // it--;
 	{
-	    pointer c = this->current;
-	    this->current = --c;
-	    return *this;
+	    iterator tmp (current); // create temporary iterator
+	    this->current--; // decrement iterator
+	    return tmp; // return it before decrementation
 	}
 
 

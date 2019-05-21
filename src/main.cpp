@@ -99,7 +99,7 @@ TEST(IntVector, MoveConstructor)
 }
 
 
-
+/*
 TEST(IntVector, AssignOperator)
 {
     // Range = the entire vector.
@@ -478,7 +478,7 @@ TEST(IntVector, InsertSingleValueAtPosition)
     vec.insert( vec.end(), 7 );
     ASSERT_EQ( vec , ( sc::vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 } ) );
 }
-/*
+
 TEST(IntVector, InsertRange)
 {
     // Aux arrays.
