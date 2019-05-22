@@ -24,7 +24,7 @@ namespace sc {
 	{ /* empty */}
 
 	/// Constructor with a pointer parameter
-	MyIterator( pointer p ): 
+	MyIterator( pointer p ):
 	    current{p}
 	{ /* empty */}
 
@@ -134,17 +134,17 @@ namespace sc {
 	    return current - rhs.current;
 	}
 
-	/// Equity relational operator. 
+	/// Equity relational operator.
 	/***
 	 * \param other iterator to be compare with.
 	 * \return true if both iterators refer to the same location within the vector, and false otherwise.
 	 */
 	bool operator==( const MyIterator& other ) const // it1 == it2
 	{
-	    return this->current == other.current; 
+	    return this->current == other.current;
 	}
 
-	/// Difference relational operator. 
+	/// Difference relational operator.
 	/***
 	 * \param other iterator to be compare with.
 	 * \return true if both iterators refer to a different location within the vector, and false otherwise.
@@ -153,6 +153,17 @@ namespace sc {
 	{
 	    return this->current != other.current;
 	}
+
+  ///  Operator<: checks if pointers of lhs < rhs
+  /***
+   * \param rhs right hand side iterator to be compare with.
+   * \return true if pointer of this iterator is less then pointer of rhs
+   */
+
+  bool operator<( const MyIterator& rhs )
+  {
+    return (this->current < rhs.current);
+  }
 
 	/// Return a iterator pointing to the n-th successor in the vector from it.
 	/***
@@ -433,8 +444,12 @@ namespace sc {
 
 	    // Alocacate old vector capacity 
 	    data = new T[ m_capacity ];
+<<<<<<< HEAD
 	    
 	    // update m_size
+=======
+
+>>>>>>> 3529d99d0f3d786840aee5caada6d57843d16eb5
 	    m_size = 0;
 	}
 
@@ -522,6 +537,7 @@ namespace sc {
 	/// Inserir elemento numa posição especifica
 	iterator insert( iterator position, const T& val )
 	{
+<<<<<<< HEAD
 	    //reservar espaço para inserçao
 	    if ( m_size == m_capacity )
 		{
@@ -563,15 +579,70 @@ namespace sc {
 		return inserted;
 	    }
 	}
+=======
+      // se position for o começo da lista, chamar push_front
+      if(position == this->begin())
+      {
+        push_front(val);
+        return this->begin();
+      }
+      // se position for o fim da lista, chamar push_back
+      else if(position == this->end())
+      {
+        push_back(val);
+        return this->end();
+      }
+      else
+      {
+        if(m_size == m_capacity)
+        {
+          reserve(2*m_size);
+        }
+
+        // alocar espaço para novo data
+        T * temp = new T[m_capacity];
+
+        iterator it = this->begin();
+        int ia = 0;
+        int pos = 0;
+        while(it != this->end())
+        {
+          if(it++ == position)
+          {
+            temp[ia] = val;
+            pos = ia;
+          }
+          else{
+            temp[ia] = *it;
+          }
+
+          ia++;
+          it++;
+        }
+
+        m_size += 1;
+        delete [] data;
+        data = temp;
+        return iterator(&data[pos]);
+      }
+
+		}
+
+>>>>>>> 3529d99d0f3d786840aee5caada6d57843d16eb5
 
 	// ?????????????????????????????? terminar
 	template < typename InItr >
 	iterator insert( iterator pos, InItr first, InItr last )
 	{
-
+    return pos;
 	}
 
-	// ????????????????????? falta um insert ver pg 12 l 43
+	// ????????????????????? terminar
+  iterator insert( iterator pos, std::initializer_list<T> ilist )
+  {
+    return pos;
+  }
+
 
 	/// Increase the storage capacity of the array to the value new_cap.
 	/***
@@ -860,7 +931,7 @@ namespace sc {
 	return true;
     }
 
-    
+
     /// Difference relational operator: checks if contents of lhs and rhs are different.
     /***
      * \param lhs left hand side vector to be compare with.
@@ -883,5 +954,6 @@ namespace sc {
 	return false;
 
     }
+
 
 } // end namespace sc
