@@ -16,6 +16,7 @@ namespace sc {
 	typedef T value_type; //!< Value type the iterator points to.
 	typedef T* pointer;   //!< Pointer to the value type.
 	typedef T& reference; //!< Reference to the value type
+	typedef const T& const_reference; //!< Reference to the value type
 	typedef std::bidirectional_iterator_tag iterator_category; //!< Iterator category.
 
 	/// Default constructor
@@ -62,7 +63,7 @@ namespace sc {
 	/***
 	 * \return reference to the object located at the position pointed by the iterator.
 	 */
-	const reference operator*( void ) const // x = *it
+	const_reference operator*( void ) const // x = *it
 	{
 	    return *current;
 	}
@@ -221,7 +222,6 @@ namespace sc {
     public:
 
 	using size_type = unsigned long; //!< The size type.
-	using value_type = T; //!< The value type
 	using pointer = T*;   //!< Pointer to a value stored in the container.
 	using reference = T&; //!< Reference to a value stored in the container.
 	using const_reference = const T&; //!< Const reference to a value stored in the container.
@@ -308,7 +308,7 @@ namespace sc {
 	/***
 	 * \return first item in the list.
 	 */
-	iterator begin( void ) const
+	iterator begin( void ) 
 	{
 	    return iterator( &data[0] );
 	}
@@ -317,7 +317,7 @@ namespace sc {
 	/***
 	 * \return position just after the last element of the list.
 	 */
-	iterator end( void ) const
+	iterator end( void ) 
 	{
 	    return iterator( &data[m_size] );
 	}
@@ -397,6 +397,8 @@ namespace sc {
 
 	    // Copy elements from list
 	    std::copy ( ilist.begin(), ilist.end(), data );
+
+	    return *this;
 	}
 
 	///=== CAPACITY METHODS
@@ -444,12 +446,8 @@ namespace sc {
 
 	    // Alocacate old vector capacity 
 	    data = new T[ m_capacity ];
-<<<<<<< HEAD
 	    
 	    // update m_size
-=======
-
->>>>>>> 3529d99d0f3d786840aee5caada6d57843d16eb5
 	    m_size = 0;
 	}
 
@@ -537,88 +535,46 @@ namespace sc {
 	/// Inserir elemento numa posição especifica
 	iterator insert( iterator position, const T& val )
 	{
-<<<<<<< HEAD
-	    //reservar espaço para inserçao
-	    if ( m_size == m_capacity )
+
+	  // se position for o começo da lista, chamar push_front
+	  if(position == this->begin())
+	    {
+	      push_front(val);
+	      return this->begin();
+	    }
+	  // se position for o fim da lista, chamar push_back
+	  else if(position == this->end())
+	    {
+	      push_back(val);
+	      return this->end();
+	    }
+	  else
+	    {
+	      if(m_size == m_capacity)
 		{
-		    std::cout << "[insert] : capacity = " << m_capacity << ", estou dobrando...\n";
-		    reserve( ( m_capacity == 0 ) ? 1 : (2 * m_capacity) );
+		  reserve(2*m_size);
 		}
 
-	    if( position == this->begin() ) {
+	      // alocar espaço para novo data
+	      T * temp = new T[m_capacity];
 
-		//Realocar os elementos
+	      iterator it = this->begin();
+	      int ia = 0;
+	      int pos = 0;
+	      while(it != this->end())
+		{
+		  if(it++ == position)
+		    {
+		      temp[ia] = val;
+		      pos = ia;
+		    }
+		  else{
+		    temp[ia] = *it;
+		  }
 
-		T* count =  data + (m_size-1); // point to last element
-		while( count >= data ) {
-		    *(count+1) = *count; // move element to the right
-		    count--;
+		  ia++;
+		  it++;
 		}
-		data[0] = val;
-		m_size++;
-
-		return position;
-	    }
-	    else {
-		size_type d = 0;
-		//Saber a posição para inserir o lemento no data
-		for(iterator it = this->begin();it != position; it++) {
-		    d++;
-		}
-
-		T* count = data+(m_size-1);
-		while(count >= data + (d-1)) {
-		    *(count+1) = *count;
-		    count--;
-		}
-
-		data[d-1] = val;
-		m_size++;
-
-		iterator inserted(data+(d-1));
-		return inserted;
-	    }
-	}
-=======
-      // se position for o começo da lista, chamar push_front
-      if(position == this->begin())
-      {
-        push_front(val);
-        return this->begin();
-      }
-      // se position for o fim da lista, chamar push_back
-      else if(position == this->end())
-      {
-        push_back(val);
-        return this->end();
-      }
-      else
-      {
-        if(m_size == m_capacity)
-        {
-          reserve(2*m_size);
-        }
-
-        // alocar espaço para novo data
-        T * temp = new T[m_capacity];
-
-        iterator it = this->begin();
-        int ia = 0;
-        int pos = 0;
-        while(it != this->end())
-        {
-          if(it++ == position)
-          {
-            temp[ia] = val;
-            pos = ia;
-          }
-          else{
-            temp[ia] = *it;
-          }
-
-          ia++;
-          it++;
-        }
 
         m_size += 1;
         delete [] data;
@@ -627,8 +583,6 @@ namespace sc {
       }
 
 		}
-
->>>>>>> 3529d99d0f3d786840aee5caada6d57843d16eb5
 
 	// ?????????????????????????????? terminar
 	template < typename InItr >
@@ -813,20 +767,20 @@ namespace sc {
 
 
 	const T& back( void ) const
-  {
-    return data[m_size-1];
-  }
+	{
+	  return data[m_size-1];
+	}
 
 	T& back( void )
-	{
+	  {
 	    return data[m_size-1];
-	}
+	  }
 
 
 	const T& front( void ) const
-  {
-    return data[0];
-  }
+	{
+	  return data[0];
+	}
 
 	T& front( void )
 	{
@@ -915,8 +869,8 @@ namespace sc {
      * \param rhs right hand side vector to be compare with.
      * \return true if vectors have the same size and each element in lhs compares equal with the element in rhs at the same position, false otherwise.
      */
-    //template <typename T>
-    bool operator==( const vector& lhs, const vector& rhs )
+    template <typename T>
+    bool operator==( const vector<T>& lhs, const vector<T>& rhs )
     {
 	if( lhs.size() != rhs.size() ){
 	    return false;
@@ -938,8 +892,8 @@ namespace sc {
      * \param rhs right hand side vector to be compare with.
      * \return true if vectors have not the same size or there is a least one element in lhs that compares different with the element in rhs at the same position, false if they compare equal.
      */
-    //template <typename T>
-    bool operator!=( const vector& lhs, const vector& rhs )
+    template <typename T>
+    bool operator!=( const vector<T>& lhs, const vector<T>& rhs )
     {
 	if( lhs.size() != rhs.size() ){
 	    return true;

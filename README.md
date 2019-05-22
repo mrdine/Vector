@@ -17,4 +17,4 @@ Obs: dá conflito manter a pasta include/gtest e rodar com o gtest local. Mudar 
 
 to compile with local gtest manually, follow these steps:
 
-	g++ -Wall -std=c++11 src/main.cpp -L lib -I include -l gtest -l gtest_main -l pthread -o exe
+	g++ -Wall -std=c++11 src/main.cpp -L lib -I include -l gtest -l gtest_main -l pthread -o vector.out
