@@ -24,7 +24,7 @@ namespace sc {
 	{ /* empty */}
 
 	/// Constructor with a pointer parameter
-	MyIterator( pointer p ): // precisa 6???????????
+	MyIterator( pointer p ): 
 	    current{p}
 	{ /* empty */}
 
@@ -68,16 +68,15 @@ namespace sc {
 	}
 
 
-	/// arrow operator:
+	/// arrow operator: return a pointer to the location in the vector the it points to.
 	/***
 	 * \return pointer
 	 */
-	/*pointer operator->( void ) const
+	pointer operator->( void ) const
 	{
 	    assert( current != nullptr );
 	    return current;
 	}
-	*/
 
 	/// Pre-increment operator: increment iterator on one unit
 	/***
@@ -135,40 +134,25 @@ namespace sc {
 	    return current - rhs.current;
 	}
 
-	bool operator==( const MyIterator& other )
+	/// Equity relational operator. 
+	/***
+	 * \param other iterator to be compare with.
+	 * \return true if both iterators refer to the same location within the vector, and false otherwise.
+	 */
+	bool operator==( const MyIterator& other ) const // it1 == it2
 	{
-	    return this->current == other.current;
+	    return this->current == other.current; 
 	}
 
-
-
-	bool operator!= ( const MyIterator& other ) //????????????????????????????
+	/// Difference relational operator. 
+	/***
+	 * \param other iterator to be compare with.
+	 * \return true if both iterators refer to a different location within the vector, and false otherwise.
+	 */
+	bool operator!= ( const MyIterator& other ) const // it1 != it2
 	{
-	    if(this->current == other.current)
-		{
-		    return false;
-		} else {return true;}
-
+	    return this->current != other.current;
 	}
-
-	bool operator<( const MyIterator& other ) //????????????????????????????
-	{
-	    if(this->current < other.current)
-		{
-		    return true;
-		} else {
-		return false;
-	    }
-	}
-
-	bool operator<=( const MyIterator& other ) //????????????????????????????
-	{
-	    if(this->current <= other.current)
-		{
-		    return true;
-		} else {return false;}
-	}
-
 
 	/// Return a iterator pointing to the n-th successor in the vector from it.
 	/***
@@ -389,69 +373,52 @@ namespace sc {
 
 
 	/// initializer_list assigment operator
-  vector& operator=( std::initializer_list<T> ilist )
-  {
-    // resets vector
-    delete [] data;
-    // copy atributes from list
-    data = new T[ilist.size()];
-    m_size = ilist.size();
-    m_capacity = ilist.size();
-
-    // Copy elements from list
-    std::copy ( ilist.begin(), ilist.end(), data );
-  }
-
-
-
-	//Operador !=
-	bool operator !=(const vector& other) const
+	vector& operator=( std::initializer_list<T> ilist )
 	{
-	    //Ponteiro para this->data
-	    T* myData = data;
-	    //Ponteiro para data do vector other
-	    T* otherData = other.data;
-	    //Se o tamanho do meu vector for igual ao do outro vector, então analisar cada valor do myData com a respectiva posição do otherData
-	    if(m_size == other.m_size)
-		{
-		    //Contar até o ultimo elemento
-		    size_type contador = 0;
-		    while(contador < m_size)
-			{
-			    //Se o valor do myData for diferente do otherData na respectiva posição, então retornar true
-			    if(*myData != *otherData)
-				{
-				    return true;
-				}
-			    myData++;
-			    otherData++;
-			    contador++;
-			}
-		    return false;
-		} else {return true;}
+	    // resets vector
+	    delete [] data;
+
+	    // copy atributes from list
+	    data = new T[ilist.size()];
+	    m_size = ilist.size();
+	    m_capacity = ilist.size();
+
+	    // Copy elements from list
+	    std::copy ( ilist.begin(), ilist.end(), data );
 	}
 
 	///=== CAPACITY METHODS
 
-	//Retorna o tamanho do vector (tamanho do espaço preenchido)
+	/// Returns the number of elements in the vector.
+	/***
+	 * \return Vector size.
+	 */
 	size_type size( void ) const
 	{
 	    return m_size;
 	}
 
-	//Retorna a capacidade total do vector
+	/// Return the internal storage capacity of the array.
+	/***
+	 * \return Vector storage capacity.
+	 */
 	size_type capacity( void ) const
 	{
 	    return m_capacity;
 	}
 
-	// Retorna true se o vector está vazio (m_size = 0), e false, caso contrário
+	/// Return if the vector is empty or not.
+	/***
+	 * \return true if the container contains no elements, and false otherwise.
+	 */
 	bool empty( void ) const
 	{
-	    if(this->m_size == 0)
-		{
-		    return true;
-		} else {return false;}
+	    // Return true if vector is empty (m_size = 0)
+	    if( this->m_size == 0 ) {
+		return true;
+	    } else {
+		return false;
+	    }
 	}
 
 
@@ -460,13 +427,13 @@ namespace sc {
 	// Limpa todo o vetor (deve ser NULL?) e redefinindo m_size = 0
 	void clear( void )
 	{
-      // limpa data
+	    // limpa data
 	    delete[] data;
 
-      // Aloca a capacidade antiga do vector
-      data = new T[ m_capacity ];
-
-      m_size = 0;
+	    // Aloca a capacidade antiga do vector
+	    data = new T[ m_capacity ];
+	    
+	    m_size = 0;
 	}
 
 	//Insere elemento na frente do vector
@@ -831,7 +798,11 @@ namespace sc {
 	//???????????????????????? tem dois data faltando pg 13 l63 e 64
 
 
-	// Friend functions
+	//=== Friend functions
+	/// Insertion operator: print vector to a output stream
+	/***
+	 * \return ostream object.
+	 */
 	friend std::ostream& operator<<( std::ostream& os, const vector& v )
 	{
 	    os << "[ ";
@@ -843,44 +814,12 @@ namespace sc {
 	    return os;
 	}
 
-  //Operador ==
-	friend bool operator==( const vector& other1, const vector& other2 )
-	{
-	    //Ponteiro para this->data
-	    T* myData = other1.data;
-	    //Ponteiro para data do vector other
-	    T* otherData = other2.data;
 
-	    //Se o tamanho do meu vector for igual ao do outro vector, então analisar cada valor do myData com a respectiva posição do otherData
-	    if(other1.m_size == other1.m_size)
-		{
-		    //Contar até o ultimo elemento
-		    size_type contador = 0;
-		    while(contador < other1.m_size)
-			{
-			    //Se o valor do myData for diferente do otherData na respectiva posição, então retornar false
-			    if(myData[contador] != otherData[contador])
-				{
-				    return false;
-				}
-			    contador++;
-			}
-		    return true;
-		} else {return false;}
-	}
-
-  //Operador !=
-	friend bool operator!=( const vector& other1, const vector& other2 )
-	{
-
-	    //Se o tamanho do meu vector for igual ao do outro vector, então analisar cada valor do myData com a respectiva posição do otherData
-	    if(other1.m_size == other1.m_size)
-		{
-		    return !(other1 == other2);
-		} else {return true;}
-	}
 	// ??????????????????/ falta friend function swap pg 13 l 68
+	friend void swap ( vector<T>& vec1, vector<T>& vec2 )
+	{
 
+	}
 
     private:
 	pointer data; //!< Data storage area for the dynamic array.
@@ -888,5 +827,52 @@ namespace sc {
 	size_type m_capacity; //!< Vector’s storage capacity.
 
     }; // end class vector
+
+
+    /// Equity relational operator: checks if contents of lhs and rhs are equal.
+    /***
+     * \param lhs left hand side vector to be compare with.
+     * \param rhs right hand side vector to be compare with.
+     * \return true if vectors have the same size and each element in lhs compares equal with the element in rhs at the same position, false otherwise.
+     */
+    template <typename T>
+    bool operator==( const vector<T>& lhs, const vector<T>& rhs )
+    {
+	if( lhs.size() != rhs.size() ){
+	    return false;
+	}
+
+	for( auto i = 0; i< lhs.size(); i++ ){
+	    if( lhs[i] != rhs[i]){
+		return false;
+	    }
+	}
+
+	return true;
+    }
+
+    
+    /// Difference relational operator: checks if contents of lhs and rhs are different.
+    /***
+     * \param lhs left hand side vector to be compare with.
+     * \param rhs right hand side vector to be compare with.
+     * \return true if vectors have not the same size or there is a least one element in lhs that compares different with the element in rhs at the same position, false if they compare equal.
+     */
+    template <typename T>
+    bool operator!=( const vector<T>& lhs, const vector<T>& rhs )
+    {
+	if( lhs.size() != rhs.size() ){
+	    return true;
+	}
+
+	for( auto i = 0; i< lhs.size(); i++ ){
+	    if( lhs[i] != rhs[i]){
+		return true;
+	    }
+	}
+
+	return false;
+
+    }
 
 } // end namespace sc

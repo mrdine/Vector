@@ -436,7 +436,7 @@ TEST(IntVector, ShrinkToFit)
     for( const auto & e : vec )
         ASSERT_EQ( e , ++i );
 }
-/*
+
 TEST(IntVector, OperatorEqual)
 {
     // #1 From an empty vector.
@@ -448,7 +448,9 @@ TEST(IntVector, OperatorEqual)
     ASSERT_EQ( vec , vec2 );
     ASSERT_TRUE( not ( vec == vec3 ) );
     ASSERT_TRUE( not ( vec == vec4 ) );
+    ASSERT_TRUE(  vec == vec2  );
 }
+
 
 TEST(IntVector, OperatorDifferent)
 {
@@ -459,10 +461,13 @@ TEST(IntVector, OperatorDifferent)
     sc::vector<int> vec4 { 8, 4, 5 };
 
     ASSERT_TRUE( not( vec != vec2 ) );
-    ASSERT_NE( vec, vec3 );
-    ASSERT_NE( vec,vec4 );
+    ASSERT_TRUE( vec != vec3 );
+    ASSERT_TRUE( vec != vec4 );
+    //ASSERT_NE( vec, vec3 );
+    //ASSERT_NE( vec,vec4 );
 }
 
+/*
 TEST(IntVector, InsertSingleValueAtPosition)
 {
     // #1 From an empty vector.
@@ -478,6 +483,7 @@ TEST(IntVector, InsertSingleValueAtPosition)
     vec.insert( vec.end(), 7 );
     ASSERT_EQ( vec , ( sc::vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 } ) );
 }
+
 
 TEST(IntVector, InsertRange)
 {
