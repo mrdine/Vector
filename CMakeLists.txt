@@ -14,7 +14,7 @@ set (CMAKE_CXX_STANDARD 11)
 
 #=== SETTING VARIABLES ===#
 # Compiling flags
-set( GCC_COMPILE_FLAGS "-Wall -std=c++11 -g" )
+set( GCC_COMPILE_FLAGS "-Wall -std=c++11 -g -ggdb -fstandalone-debug -W " )
 set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COMPILE_FLAGS} ${PREPROCESSING_FLAGS}" )
 
 #Include dir

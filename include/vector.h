@@ -210,6 +210,7 @@ namespace sc {
     public:
 
 	using size_type = unsigned long; //!< The size type.
+	using value_type = T; //!< The value type
 	using pointer = T*;   //!< Pointer to a value stored in the container.
 	using reference = T&; //!< Reference to a value stored in the container.
 	using const_reference = const T&; //!< Const reference to a value stored in the container.
@@ -424,19 +425,23 @@ namespace sc {
 
 	///=== MODIFIERS METHODS
 
-	// Limpa todo o vetor (deve ser NULL?) e redefinindo m_size = 0
+	/// Remove all elements from the container.
 	void clear( void )
 	{
-	    // limpa data
+	    // clean data
 	    delete[] data;
 
-	    // Aloca a capacidade antiga do vector
+	    // Alocacate old vector capacity 
 	    data = new T[ m_capacity ];
 	    
+	    // update m_size
 	    m_size = 0;
 	}
 
-	//Insere elemento na frente do vector
+	/// Adds value to the front of the list.
+	/***
+	 * \param value value to be added to the front of the list
+	 */
 	void push_front( const T& value )
 	{
 
@@ -461,15 +466,18 @@ namespace sc {
 	    m_size++;
 	}
 
-	//Insere elemento atrás do vector
+	
+	/// Adds value to the end of the list.
+	/***
+	 * \param value value to be added to the end of the list
+	 */
 	void push_back( const T& value )
 	{
 	    // Verificar se tem espaço para receber o novo elemento.
-	    if ( m_size == m_capacity )
-		{
-		    std::cout << "[push_back] : capacity = " << m_capacity << ", estou dobrando...\n";
-		    reserve( ( m_capacity == 0 ) ? 1 : (2 * m_capacity) );
-		}
+	    if ( m_size == m_capacity ) {
+		std::cout << "[push_back] : capacity = " << m_capacity << ", estou dobrando...\n";
+		reserve( ( m_capacity == 0 ) ? 1 : (2 * m_capacity) );
+	    }
 
 	    // Inserir normalmente.
 	    data[m_size] = value;
@@ -477,7 +485,7 @@ namespace sc {
 	    m_size++;
 	}
 
-	//Apaga o primeiro elemento do vector apenas deslocando menos uma posição a partir do segundo elemento até o ultimo
+	/// Removes the object at the front of the list. In order to do that, moves all the elements one position to the right.
 	void pop_front( void )
 	{
 	    //Apaga somente se o vector não for vazio
@@ -496,7 +504,7 @@ namespace sc {
 		}
 	}
 
-	//Apaga o ultimo elemento do vector
+	/// Removes the object at the end of the list.
 	void pop_back( void )
 	{
 	    //Apagar apenas se o tamanho do vector for maior que 0
@@ -510,52 +518,50 @@ namespace sc {
 		}
 	}
 
+
 	/// Inserir elemento numa posição especifica
-	iterator insert ( iterator position, const T& val )
+	iterator insert( iterator position, const T& val )
 	{
 	    //reservar espaço para inserçao
 	    if ( m_size == m_capacity )
 		{
-		    std::cout << "[push_back] : capacity = " << m_capacity << ", estou dobrando...\n";
+		    std::cout << "[insert] : capacity = " << m_capacity << ", estou dobrando...\n";
 		    reserve( ( m_capacity == 0 ) ? 1 : (2 * m_capacity) );
 		}
 
-	    if(position == this->begin())
-		{
-		    //Realocar os elementos
-		    T* count =  data+(m_size-1);
-		    while(count >= data)
-			{
-			    *(count+1) = *count;
-			    count--;
-			}
-		    data[0] = val;
-		    m_size++;
+	    if( position == this->begin() ) {
 
-		    return position;
+		//Realocar os elementos
+
+		T* count =  data + (m_size-1); // point to last element
+		while( count >= data ) {
+		    *(count+1) = *count; // move element to the right
+		    count--;
 		}
-	    else
-		{
-		    size_type d = 0;
-		    //Saber a posição para inserir o lemento no data
-		    for(iterator it = this->begin();it != position; it++)
-			{
-			    d++;
-			}
+		data[0] = val;
+		m_size++;
 
-		    T* count = data+(m_size-1);
-		    while(count >= data + (d-1))
-			{
-			    *(count+1) = *count;
-			    count--;
-			}
-
-		    data[d-1] = val;
-		    m_size++;
-
-		    iterator inserted(data+(d-1));
-		    return inserted;
+		return position;
+	    }
+	    else {
+		size_type d = 0;
+		//Saber a posição para inserir o lemento no data
+		for(iterator it = this->begin();it != position; it++) {
+		    d++;
 		}
+
+		T* count = data+(m_size-1);
+		while(count >= data + (d-1)) {
+		    *(count+1) = *count;
+		    count--;
+		}
+
+		data[d-1] = val;
+		m_size++;
+
+		iterator inserted(data+(d-1));
+		return inserted;
+	    }
 	}
 
 	// ?????????????????????????????? terminar
@@ -567,7 +573,10 @@ namespace sc {
 
 	// ????????????????????? falta um insert ver pg 12 l 43
 
-	/// Aumenta a capacidade de armazenamento do vector para o valor `new_cap` fornecido.
+	/// Increase the storage capacity of the array to the value new_cap.
+	/***
+	 * \param new_cap new storage capacity value. 
+	 */
 	void reserve( size_type new_cap )
 	{
 	    // Se a capacidade nova < capacidade atual, não faço nada.
@@ -835,14 +844,14 @@ namespace sc {
      * \param rhs right hand side vector to be compare with.
      * \return true if vectors have the same size and each element in lhs compares equal with the element in rhs at the same position, false otherwise.
      */
-    template <typename T>
-    bool operator==( const vector<T>& lhs, const vector<T>& rhs )
+    //template <typename T>
+    bool operator==( const vector& lhs, const vector& rhs )
     {
 	if( lhs.size() != rhs.size() ){
 	    return false;
 	}
 
-	for( auto i = 0; i< lhs.size(); i++ ){
+	for( auto i = 0u; i< lhs.size(); i++ ){
 	    if( lhs[i] != rhs[i]){
 		return false;
 	    }
@@ -858,14 +867,14 @@ namespace sc {
      * \param rhs right hand side vector to be compare with.
      * \return true if vectors have not the same size or there is a least one element in lhs that compares different with the element in rhs at the same position, false if they compare equal.
      */
-    template <typename T>
-    bool operator!=( const vector<T>& lhs, const vector<T>& rhs )
+    //template <typename T>
+    bool operator!=( const vector& lhs, const vector& rhs )
     {
 	if( lhs.size() != rhs.size() ){
 	    return true;
 	}
 
-	for( auto i = 0; i< lhs.size(); i++ ){
+	for( auto i = 0u; i< lhs.size(); i++ ){
 	    if( lhs[i] != rhs[i]){
 		return true;
 	    }

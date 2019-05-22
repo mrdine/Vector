@@ -2,6 +2,7 @@
 #include <functional>           // std::function
 #include <algorithm>            // std::min_element
 #include <iostream>
+#include <vector>
 
 #include "gtest/gtest.h"        // gtest lib
 #include "../include/vector.h"   // header file for tested functions
@@ -445,6 +446,10 @@ TEST(IntVector, OperatorEqual)
     sc::vector<int> vec3 { 1, 2, 8, 4, 5 };
     sc::vector<int> vec4 { 8, 4, 5 };
 
+    //std::vector<int> vec5 { 1, 2, 3, 4, 5 };
+    //std::vector<int> vec6 { 1, 2, 3, 4, 5 };
+
+    //ASSERT_EQ( vec5 , vec6 );
     ASSERT_EQ( vec , vec2 );
     ASSERT_TRUE( not ( vec == vec3 ) );
     ASSERT_TRUE( not ( vec == vec4 ) );
