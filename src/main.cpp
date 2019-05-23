@@ -483,6 +483,10 @@ TEST(IntVector, InsertSingleValueAtPosition)
     // Insert at the end
     vec.insert( vec.end(), 7 );
     ASSERT_EQ( vec , ( sc::vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 } ) );
+
+    // Outside
+    vec.insert( std::next( vec.end(), 2 ), 5 );
+    ASSERT_EQ( vec, ( sc::vector<int>{ 0, 1, 2, 3, 4, 5, 6, 7 } ) );
 }
 
 
@@ -509,11 +513,11 @@ TEST(IntVector, InsertRange)
 
     // Outside
     vec1 = vec2;
-    //vec1.insert( std::next( vec1.end(), 2 ) , source.begin(), source.end() );
-    //ASSERT_EQ( vec1 , ( sc::vector<int>{ 1, 2, 3, 4, 5 } ) );
+    vec1.insert( std::next( vec1.end(), 2 ) , source.begin(), source.end() );
+    ASSERT_EQ( vec1 , ( sc::vector<int>{ 1, 2, 3, 4, 5 } ) );
 
 }
-/// Sem insert ainda
+
 
 TEST(IntVector, InsertInitializarList)
 {
@@ -521,11 +525,11 @@ TEST(IntVector, InsertInitializarList)
     sc::vector<int> vec1 { 1, 2, 3, 4, 5 };
     sc::vector<int> vec2 { 1, 2, 3, 4, 5 };
     sc::vector<int> source { 6, 7, 8, 9, 10 };
-
+    
     // Inset at the begining.
     vec1.insert( vec1.begin(), { 6, 7, 8, 9, 10 } );
     ASSERT_EQ( vec1 , ( sc::vector<int>{ 6, 7, 8, 9, 10, 1, 2, 3, 4, 5 } ) );
-
+    
     // In the middle
     vec1 = vec2;
     vec1.insert( std::next( vec1.begin(), 2 ), { 6, 7, 8, 9, 10 } );
@@ -540,6 +544,8 @@ TEST(IntVector, InsertInitializarList)
     vec1 = vec2;
     vec1.insert( std::next( vec1.end(), 2 ) , { 6, 7, 8, 9, 10 } );
     ASSERT_EQ( vec1 , ( sc::vector<int>{ 1, 2, 3, 4, 5 } ) );
+
+
 }
 
 

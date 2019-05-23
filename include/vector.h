@@ -322,11 +322,19 @@ namespace sc {
 	    return iterator( &data[m_size] );
 	}
 
+	/// Returns an constant iterator pointing to the first item in the list.
+	/***
+	 * \return first item in the list.
+	 */
 	const_iterator cbegin( void ) const
 	{
 	    return const_iterator(data);
 	}
 
+	/// Returns an constant iterator pointing the position just after the last element of the list.
+	/***
+	 * \return position just after the last element of the list.
+	 */
 	const_iterator cend( void ) const
 	{
 	    iterator endV(&data[m_size]);
@@ -339,7 +347,7 @@ namespace sc {
 	/// Attribution Operator. Vector receve rhs.
 	/***
 	 * \param rhs vector from rhs of attribution.
-	 * \return lhs vector, allowing chained attribution.
+	 * \return lhs vector with values equal to rhs vector, allowing chained attribution.
 	 */
 	vector& operator=( const vector& rhs )
 	{
@@ -357,10 +365,6 @@ namespace sc {
 	}
 
 	/// Move AssignOperator
-	/***
-	 * \param
-	 * \return
-	 */
 	vector& operator=( vector&& other )
 	{
 	    // Self-assignment detection
@@ -384,7 +388,11 @@ namespace sc {
 	}
 
 
-	/// initializer_list assigment operator
+	/// Assigment operator: vector receive initializer list.
+	/***
+	 * \param ilist initializer to be assign to vector.
+	 * \return vector with values equal to initialize list.
+	 */
 	vector& operator=( std::initializer_list<T> ilist )
 	{
 	    // resets vector
@@ -502,33 +510,30 @@ namespace sc {
 	void pop_front( void )
 	{
 	    //Apaga somente se o vector não for vazio
-	    if(m_size > 0)
-		{
-		    //Ponteiro que aponta para o segundo elemento do vector
-		    T* ptr = data+1;
-		    //Deslocar menos uma posição do segundo elemento até o ultimo;
-		    while(ptr != data+(m_size))
-			{
-			    *(ptr-1) = *ptr;
-			    ptr++;
-			}
-		    //Reduz tamanho do vector
-		    m_size--;
+	    if(m_size > 0) {
+		//Ponteiro que aponta para o segundo elemento do vector
+		T* ptr = data+1;
+		//Deslocar menos uma posição do segundo elemento até o ultimo;
+		while(ptr != data+(m_size)) {
+		    *(ptr-1) = *ptr;
+		    ptr++;
 		}
+		//Reduz tamanho do vector
+		m_size--;
+	    }
 	}
 
 	/// Removes the object at the end of the list.
 	void pop_back( void )
 	{
 	    //Apagar apenas se o tamanho do vector for maior que 0
-	    if(m_size > 0)
-		{
-		    //Destroi (atribuindo 0?) o ultimo elemento
-		    data[m_size-1] = 0;
+	    if(m_size > 0) {
+		//Destroi (atribuindo 0?) o ultimo elemento
+		data[m_size-1] = 0;
 
-		    //Reduz o tamanho
-		    m_size--;
-		}
+		//Reduz o tamanho
+		m_size--;
+	    }
 	}
 
 
@@ -539,48 +544,47 @@ namespace sc {
 	 */
 	iterator insert( iterator position, const T& val )
 	{
-		// se position for a primeira posição, chamar push_front
-		if( position == this->begin() )
-		{
-			push_front( val );
-			return this->begin();
-		}
-		// se position for a ultima posição, chamar push_back
-	  	else if( position == this->end() )
-		{
-			push_back( val );
-			return this->end();
-		}
-		else
-		{	
-			// guarda o offset do position
-			int dis = position - this->begin();
+	    // se posição estiver fora do vetor, não insira
+	    if( this->end() < position ) {
+		return position;
+	    }
+	    
+	    // se position for a primeira posição, chamar push_front
+	    if( position == this->begin() ) {
+		push_front( val );
+		return this->begin();
+	    }
+	    // se position for a ultima posição, chamar push_back
+	    else if( position == this->end() ) {
+		push_back( val );
+		return this->end();
+	    }
+	    else {	
+		// guarda o offset do position
+		int dis = position - this->begin();
 
-			// verifica se tem espaço e aloca caso não
-			if( m_size == m_capacity )
-			{
-				reserve( 2 * m_capacity );
-				position = this->begin() + dis;
-			}
+		// verifica se tem espaço e aloca caso não
+		if( m_size == m_capacity ) {
+		    reserve( 2 * m_capacity );
+		    position = this->begin() + dis;
+		}
 
 			
-			// desloca elementos
-			int aux = m_size;
-			while(dis != aux)
-			{
-				data[aux] = data[aux-1];
-				aux--;
-				std::cout << "DIS: " << dis << "AUX " << aux << std::endl;
-			}
-			
-			//position
-			data[dis] = val;
-			m_size += 1;
-			return position;
+		// desloca elementos
+		int aux = m_size;
+		while(dis != aux) {
+		    data[aux] = data[aux-1];
+		    aux--;
 		}
+			
+		//position
+		data[dis] = val;
+		m_size += 1;
+		return position;
+	    }
 	}
 
-	// ?????????????????????????????? terminar
+
         /// Insert a range in a specific position.
       	/***
 	 * \param pos where to insert range.
@@ -590,33 +594,30 @@ namespace sc {
 	template < typename InItr >
 	iterator insert( iterator pos, InItr first, InItr last )
 	{	
-		// se inserir intervalo no fim do vetor, não incremente o it
-		if(pos == this->end())
+	    // se inserir intervalo no fim do vetor, não incremente o it
+	    if(pos == this->end()) {
+		// iterator que aponta para a proxima posição a ser inserida
+		iterator it = insert(pos, *first);
+		first++;
+		while( first != last ) {
+		    it = insert(it, *first);
+		    first++;	
+		}		
+		
+	    }
+	    else
 		{
-			// iterator que aponta para a proxima posição a ser inserida
-			iterator it = insert(pos, *first);
-			first++;
-			while( first != last )
-			{
-				it = insert(it, *first);
-				first++;
+		    // iterator que aponta para a proxima posição a ser inserida
+		    iterator it = insert(pos, *first);
+		    first++;
+		    while( first != last ) {
+			it = insert(it+1, *first);
+			first++;			
+		    }		
 			
-			}		
-			return pos;
 		}
-		else
-		{
-			// iterator que aponta para a proxima posição a ser inserida
-			iterator it = insert(pos, *first);
-			first++;
-			while( first != last )
-			{
-				it = insert(it+1, *first);
-				first++;
-			
-			}		
-    	return pos;
-		}
+		
+	    return pos;
 	}
 
 	/// Insert a range in a specific position.
@@ -625,16 +626,36 @@ namespace sc {
 	 * \param first begining of the range to be inserterted in position pos.
 	 * \param last past end of the range to be inserterted in position pos.
 	 */
+	iterator insert( iterator pos, std::initializer_list<T> ilist )
+	{
+	    vector<T> vec_in{ilist};
 
-  iterator insert( iterator pos, std::initializer_list<T> ilist )
-  {
-	  auto first = ilist.begin();
-	  auto last = ilist.last();
+	    // se inserir intervalo no fim do vetor, não incremente o it
+	    if(pos == this->end()) {	    
+		size_type i=0;
+		iterator it = insert(pos, vec_in[i]); // iterator que aponta para a proxima posição a ser inserida
+		i++;
+		while( i < vec_in.size() ) {
+		    it = insert(it, vec_in[i]); // insere na posição it o valor de vec_in an posição i
+		    i++;			
+		}		
+	    
+	    }
+	    else {
+		// iterator que aponta para a proxima posição a ser inserida
+		size_type i=0;
+		iterator it = insert(pos, vec_in[i]); // iterator que aponta para a proxima posição a ser inserida
+		i++;
+		while( i < vec_in.size() ) {
+		    it = insert(it+1, vec_in[i]); // insere na posição it o valor de vec_in an posição i
+		    i++;			
+		}	
+	    
+	    }
 
-	  insert(pos, first, last);
-
-	  return pos;
-  }
+	    return pos;
+	}
+      
 
 
 
@@ -652,7 +673,7 @@ namespace sc {
 
 	    // Passo 2: copiar os dados da memória antiga para a nova.
 	    std::copy( &data[0], &data[m_size],  temp );
-	    //std::copy( begin(), end(), temp );
+
 
 	    // Passo 3: Liberar a memória antiga.
 	    delete[] data;
@@ -664,7 +685,7 @@ namespace sc {
 	    m_capacity = new_cap;
 	}
 
-	// Remove a capacidade não usada de memória, transforma a capacidade em size()
+	/// Remove capacity not use in memory.
 	void shrink_to_fit( void )
 	{
 	    //Alocar nova memória com capacidade de size()
@@ -678,31 +699,36 @@ namespace sc {
 	    m_capacity = m_size;
 	}
 
-	/// Repreenche o vector com count vezes o valor value;
+	/// Replaces the contents with count copies of value value.
+	/***
+	 * \param count number of times to copie value.
+	 * \param value value to be copied on vector.
+	 */
 	void assign( size_type count, const T & value )
 	{
-		if(m_capacity < count)
-		{
-			reserve(count);
-		}
+	    if(m_capacity < count) {
+		reserve(count);
+	    }
 
-		// limpa o vector
-		delete [] data;
-		// aloca o espaço necessario
-		data = new T[count];
-		// restitui o tamanho
-		m_size = count;
+	    // limpa o vector
+	    delete [] data;
+	    // aloca o espaço necessario
+	    data = new T[count];
+	    // restitui o tamanho
+	    m_size = count;
 
-		// preenche o vector com o count
-		for(size_type i = 0; i < count; i++)
-		{
-		    data[i] = value;
-		}
+	    // preenche o vector com o count
+	    for(size_type i = 0; i < count; i++) {
+		data[i] = value;
+	    }
 	}
 
-	// ???????????????????????? assinatura diferente, pq?
-	/// Repreenche o vetor com copia dos elementos na lista ilist
-	void assign( std::initializer_list<T> ilist )
+
+	/// replaces the contents of the list with the elements from the initializer list ilist.
+	/***
+	 * \param ilist initializer list to be used in the replacement of vector contents.
+	 */
+	void assign( const std::initializer_list<T> &ilist )
 	{
 	    //Reservar espaço, se não houver
 	    reserve(ilist.size() * 2);
@@ -714,7 +740,11 @@ namespace sc {
 
 	}
 
-	/// Repreenche o vector com copia dos elementos do range [first, last) (Não entendi)
+	/// replaces the contents of the list with copies of the elements in the range [first; last)
+	/***
+	 * \param first begining of the range to be assigned to vector.
+	 * \param last past end of the range to be assigned to vector.
+	 */
 	template < typename InItr >
 	void assign( InItr first, InItr last )
 	{
@@ -739,11 +769,19 @@ namespace sc {
 
 	}
 
-	//Apaga um elemento do vector na posição dada pelo iterator it, se it < last_element, após a remoção os elementos a partir do sucessor do it serão deslocados, caso contrário (it == last_element), o valor será dito como NULL ou 0?
+	
+	/// Removes the object at position pos.
+	/***
+	 * \param it position where to remove the object.
+	 * \return iterator to the element that follows pos before the call.
+	 */
 	iterator erase( iterator it )
 	{
+
+	    
 	    //Iterador para a posição do ultimo elemento
 	    iterator last_element = data+(m_size-1);
+	    
 	    //Se it < last_element, então deslocar menos uma posição os valores começando do it++ até last_element, e então reduzir o size (tamanho) do vector
 	    if(it < last_element)
 		{
@@ -772,7 +810,11 @@ namespace sc {
 		}
 	}
 
-
+	/// Removes elements in the range [first; last).
+	/***
+	 * \param first begining of the range to be removed from vector.
+	 * \param last past end of the range to be removed from vector.
+	 */
 	iterator erase( iterator first, iterator last )
 	{
 	    size_type apagados = 0;
@@ -805,71 +847,104 @@ namespace sc {
 
 	//=== ELEMENT ACCESS METHODS
 
-
+	/// Returns the a constant object at the end of the list.
+	/***
+	 * \return constant object at the end of the list.
+	 */
 	const T& back( void ) const
 	{
 	  return data[m_size-1];
 	}
 
+
+	/// Returns the object at the end of the list.
+	/***
+	 * \return object at the end of the list.
+	 */
 	T& back( void )
 	  {
 	    return data[m_size-1];
 	  }
 
-
+	/// Returns the  a constant object at the begining of the list.
+	/***
+	 * \return object at the begining of the list.
+	 */
 	const T& front( void ) const
 	{
 	  return data[0];
 	}
 
+	/// Returns the object at the begining of the list.
+	/***
+	 * \return object at the begining of the list.
+	 */
 	T& front( void )
 	{
 	    return data[0];
 	}
 
-
-	// Operador[], se o pos for menor que 0 ou maior que o tamanho do vector, é lançada uma exceção "out_of_range"
+	/// returns the object at the index pos in the vector, with no bounds-checking.
+	/***
+	 * \param pos vector index.
+	 * \return object at the index pos.
+	 */
 	T& operator[]( size_type pos )
 	{
 	    return data[pos];
 	}
 
+	/// returns a const object at the index pos in the vector, with no bounds-checking.
+	/***
+	 * \param pos vector index.
+	 * \return const object at the index pos.
+	 */
 	const T& operator[]( size_type pos ) const
 	{
 	    const T& result = data[pos];
 	    return result;
 	}
 
+	/// returns a object at the position pointed by it in the vector, with no bounds-checking.
+	/***
+	 * \param pos vector index.
+	 * \return object at the position pointed by it.
+	 */
 	T& operator[](iterator it)
 	{
 	    return *it;
 	}
 
+	
+	/// returns the object at the index pos in the array, with bounds-checking. If pos is not within the range of the list, an exception of type std::out_of_range is thrown.
+	/***
+	 * \param pos vector index.
+	 * \return object at the index pos.
+	 */
 	T& at( size_type pos )
 	{
-	    if(pos >= 0 && pos < m_size)
-		{
-		    return data[pos];
-		}
-	    else
-		{
-		    throw std::out_of_range("out of range");
-		}
+	    if(pos >= 0 && pos < m_size) {
+		return data[pos];
+	    }
+	    else {
+		throw std::out_of_range("out of range");
+	    }
 	}
 
+	/// returns the constant object at the index pos in the array, with bounds-checking. If pos is not within the range of the list, an exception of type std::out_of_range is thrown.
+	/***
+	 * \param pos vector index.
+	 * \return constant object at the index pos.
+	 */
 	const T& at( size_type pos ) const
 	{
-	    if(pos >= 0 && pos < m_size)
-		{
-		    return data[pos];
-		}
-	    else
-		{
-		    throw std::out_of_range("out of range");
-		}
+	    if(pos >= 0 && pos < m_size) {
+		return data[pos];
+	    }
+	    else {
+		throw std::out_of_range("out of range");
+	    }
 	}
-
-	//???????????????????????? tem dois data faltando pg 13 l63 e 64
 
 
 	//=== Friend functions
@@ -888,12 +963,6 @@ namespace sc {
 	    return os;
 	}
 
-
-	// ??????????????????/ falta friend function swap pg 13 l 68
-	friend void swap ( vector<T>& vec1, vector<T>& vec2 )
-	{
-
-	}
 
     private:
 	pointer data; //!< Data storage area for the dynamic array.
