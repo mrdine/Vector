@@ -14,11 +14,11 @@ Para compilar usando o cmake, siga as instruções:
      $ ./vector: run all tests
 
 
-- Para compilar manualmente com um gtest local, siga as instruções:
+Para compilar manualmente com um gtest local, siga as instruções:
 
-  $ g++ -Wall -std=c++11 src/main.cpp -L lib -I include -l gtest -l gtest_main -l pthread -o vector.out
+	$ g++ -Wall -std=c++11 src/main.cpp -L lib -I include -l gtest -l gtest_main -l pthread -o vector.out
 
 
 Autores:
-	Daniel do Nascimento Gomes
-	Karine Piacentini Coelho da Costa
+- Daniel do Nascimento Gomes
+- Karine Piacentini Coelho da Costa
