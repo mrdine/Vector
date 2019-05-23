@@ -532,7 +532,11 @@ namespace sc {
 	}
 
 
-	/// Inserir elemento numa posição especifica
+	/// Insert an element in a specific position.
+      	/***
+	 * \param position where to insert val.
+	 * \param val value to be inserterted in position position.
+	 */
 	iterator insert( iterator position, const T& val )
 	{
 
@@ -585,6 +589,12 @@ namespace sc {
 		}
 
 	// ?????????????????????????????? terminar
+        /// Insert a range in a specific position.
+      	/***
+	 * \param pos where to insert range.
+	 * \param first begining of the range to be inserterted in position pos.
+	 * \param last past end of the range to be inserterted in position pos.
+	 */
 	template < typename InItr >
 	iterator insert( iterator pos, InItr first, InItr last )
 	{
@@ -592,10 +602,17 @@ namespace sc {
 	}
 
 	// ????????????????????? terminar
-  iterator insert( iterator pos, std::initializer_list<T> ilist )
-  {
-    return pos;
-  }
+      /// Insert a range in a specific position.
+      	/***
+	 * \param pos where to insert range.
+	 * \param first begining of the range to be inserterted in position pos.
+	 * \param last past end of the range to be inserterted in position pos.
+	 */
+      iterator insert( iterator pos, std::initializer_list<T> ilist )
+      {
+	return pos;
+      }0
+								 ,
 
 
 	/// Increase the storage capacity of the array to the value new_cap.
