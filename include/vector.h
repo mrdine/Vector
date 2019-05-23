@@ -535,66 +535,89 @@ namespace sc {
 	/// Inserir elemento numa posição especifica
 	iterator insert( iterator position, const T& val )
 	{
-
-	  // se position for o começo da lista, chamar push_front
-	  if(position == this->begin())
-	    {
-	      push_front(val);
-	      return this->begin();
-	    }
-	  // se position for o fim da lista, chamar push_back
-	  else if(position == this->end())
-	    {
-	      push_back(val);
-	      return this->end();
-	    }
-	  else
-	    {
-	      if(m_size == m_capacity)
+		// se position for a primeira posição, chamar push_front
+		if( position == this->begin() )
 		{
-		  reserve(2*m_size);
+			push_front( val );
+			return this->begin();
 		}
-
-	      // alocar espaço para novo data
-	      T * temp = new T[m_capacity];
-
-	      iterator it = this->begin();
-	      int ia = 0;
-	      int pos = 0;
-	      while(it != this->end())
+		// se position for a ultima posição, chamar push_back
+	  	else if( position == this->end() )
 		{
-		  if(it++ == position)
-		    {
-		      temp[ia] = val;
-		      pos = ia;
-		    }
-		  else{
-		    temp[ia] = *it;
-		  }
-
-		  ia++;
-		  it++;
+			push_back( val );
+			return this->end();
 		}
+		else
+		{	
+			// guarda o offset do position
+			int dis = position - this->begin();
 
-        m_size += 1;
-        delete [] data;
-        data = temp;
-        return iterator(&data[pos]);
-      }
+			// verifica se tem espaço e aloca caso não
+			if( m_size == m_capacity )
+			{
+				reserve( 2 * m_capacity );
+				position = this->begin() + dis;
+			}
 
+			
+			// desloca elementos
+			int aux = m_size;
+			while(dis != aux)
+			{
+				data[aux] = data[aux-1];
+				aux--;
+				std::cout << "DIS: " << dis << "AUX " << aux << std::endl;
+			}
+			
+			//position
+			data[dis] = val;
+			m_size += 1;
+			return position;
 		}
+	}
 
 	// ?????????????????????????????? terminar
 	template < typename InItr >
 	iterator insert( iterator pos, InItr first, InItr last )
-	{
-    return pos;
+	{	
+		// se inserir intervalo no fim do vetor, não incremente o it
+		if(pos == this->end())
+		{
+			// iterator que aponta para a proxima posição a ser inserida
+			iterator it = insert(pos, *first);
+			first++;
+			while( first != last )
+			{
+				it = insert(it, *first);
+				first++;
+			
+			}		
+			return pos;
+		}
+		else
+		{
+			// iterator que aponta para a proxima posição a ser inserida
+			iterator it = insert(pos, *first);
+			first++;
+			while( first != last )
+			{
+				it = insert(it+1, *first);
+				first++;
+			
+			}		
+    	return pos;
+		}
 	}
 
 	// ????????????????????? terminar
   iterator insert( iterator pos, std::initializer_list<T> ilist )
   {
-    return pos;
+	  auto first = ilist.begin();
+	  auto last = ilist.last();
+
+	  insert(pos, first, last);
+
+	  return pos;
   }
 
 
